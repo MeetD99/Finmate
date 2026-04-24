@@ -1,0 +1,14 @@
+# Secrets
+.env
+.env.local
+
+# Local data
+instance/
+*.db
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Upload script (use once, then delete)
+upload_to_vector_db.py

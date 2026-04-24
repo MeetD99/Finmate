@@ -1,0 +1,521 @@
+Description,Category
+UPI-ZOMATO,Luxury/Discretionary
+UPI-SWIGGY,Luxury/Discretionary
+UBER TRIP,Luxury/Discretionary
+OLA CAB,Luxury/Discretionary
+AMAZON shopping,Luxury/Discretionary
+FLIPKART purchase,Luxury/Discretionary
+Myntra order,Luxury/Discretionary
+NYKAA beauty,Luxury/Discretionary
+TANISHQ gold,Luxury/Discretionary
+DMART shopping,Luxury/Discretionary
+BOOKMYSHOW movie,Luxury/Discretionary
+NETFLIX subscription,Travel
+AMAZON prime,Travel
+SONY LIV,Travel
+DISNEY+ HOTSTAR,Travel
+SPOTIFY subscription,Travel
+GAANA music,Travel
+PHONEPE recharge,Luxury/Discretionary
+PAYTM recharge,Luxury/Discretionary
+GOOGLE PLAY,Travel
+APPLE store,Luxury/Discretionary
+STARBUCKS,Travel
+CAFE COFFEE DAY,Luxury/Discretionary
+DOMINOS pizza,Luxury/Discretionary
+PIZZA HUT,Luxury/Discretionary
+KFC meal,Luxury/Discretionary
+MCDONALDS,Luxury/Discretionary
+DUNZO delivery,Luxury/Discretionary
+GROFFERS grocery,Luxury/Discretionary
+BIGBASKET,Luxury/Discretionary
+SWIGGY GENIE,Luxury/Discretionary
+HOTEL booking,Luxury/Discretionary
+OYO room,Luxury/Discretionary
+AIRBNB,Luxury/Discretionary
+MAKEMYTRIP,Luxury/Discretionary
+GOIBIBO,Luxury/Discretionary
+CLEARTRIP,Luxury/Discretionary
+IXIGO,Luxury/Discretionary
+GO AIR,Travel
+INDIGO flight,Travel
+AIR INDIA,Travel
+SPICEJET,Travel
+EMIRATES,Travel
+QATAR AIRWAYS,Travel
+MMT FLIGHT,Travel
+YATRA flight,Travel
+BIKE WALE,Luxury/Discretionary
+CAR WALE,Luxury/Discretionary
+SPOTERN,Luxury/Discretionary
+CARATLANE,Luxury/Discretionary
+PC JEWELLER,Luxury/Discretionary
+KALYAN JEWELLERS,Luxury/Discretionary
+MALABAR GOLD,Luxury/Discretionary
+JOYALUKKAS,Luxury/Discretionary
+TITAN JEWELLERY,Luxury/Discretionary
+GUCCI,Luxury/Discretionary
+LOUIS VUITTON,Luxury/Discretionary
+PRADA,Luxury/Discretionary
+ZARA,Luxury/Discretionary
+H&M,Luxury/Discretionary
+MAX FASHION,Luxury/Discretionary
+Lifestyle shopping,Luxury/Discretionary
+SHOPPING STOP,Luxury/Discretionary
+CENTRAL mall,Luxury/Discretionary
+INORBIT mall,Luxury/Discretionary
+PHOENIX mall,Luxury/Discretionary
+ELECTRICITY bill,Mandatory/Utilities
+WATER bill,Mandatory/Utilities
+GAS cylinder,Mandatory/Utilities
+TATA POWER,Mandatory/Utilities
+ADANI GAS,Mandatory/Utilities
+BSES electricity,Mandatory/Utilities
+MSEB electricity,Mandatory/Utilities
+KSEB electricity,Mandatory/Utilities
+GESCOM electricity,Mandatory/Utilities
+APSPDCL electricity,Mandatory/Utilities
+TNEB electricity,Mandatory/Utilities
+Broadband bill,Mandatory/Utilities
+ACT broadband,Mandatory/Utilities
+AIRTEL broadband,Mandatory/Utilities
+JIO FIBER,Mandatory/Utilities
+ Hathway broadband,Mandatory/Utilities
+ACT fibernet,Mandatory/Utilities
+BSNL broadband,Mandatory/Utilities
+Mobile recharge,Mandatory/Utilities
+Airtel recharge,Mandatory/Utilities
+JIO recharge,Mandatory/Utilities
+VI recharge,Mandatory/Utilities
+BSNL recharge,Mandatory/Utilities
+Rent payment,Mandatory/Utilities
+RENT credited,Mandatory/Utilities
+EMI payment,Mandatory/Utilities
+HOME loan EMI,Mandatory/Utilities
+CAR loan EMI,Mandatory/Utilities
+PERSONAL loan EMI,Mandatory/Utilities
+EDUCATION loan EMI,Mandatory/Utilities
+Car rent,Mandatory/Utilities
+Home rent,Mandatory/Utilities
+Office rent,Mandatory/Utilities
+Society maintenance,Mandatory/Utilities
+Apartment association,Mandatory/Utilities
+ICICI rent,Mandatory/Utilities
+SBI rent,Mandatory/Utilities
+School fees,Mandatory/Utilities
+College fees,Mandatory/Utilities
+University fees,Mandatory/Utilities
+Coaching fees,Mandatory/Utilities
+Tuition fees,Mandatory/Utilities
+Hospital bill,Mandatory/Utilities
+Medical bill,Mandatory/Utilities
+PHARMACY purchase,Mandatory/Utilities
+MEDPLUS pharmacy,Mandatory/Utilities
+APOLLO pharmacy,Mandatory/Utilities
+FORTIS hospital,Mandatory/Utilities
+APOLLO hospital,Mandatory/Utilities
+HEALTHINSURANCE,Mandatory/Utilities
+LIC premium,Mandatory/Utilities
+TERM insurance,Mandatory/Utilities
+CAR insurance,Mandatory/Utilities
+BIKE insurance,Mandatory/Utilities
+HEALTH insurance,Mandatory/Utilities
+GROCERY store,Non-Mandatory
+VEGETABLE market,Non-Mandatory
+FRUIT market,Non-Mandatory
+MILK dairy,Non-Mandatory
+DAILY milk,Non-Mandatory
+AMUL milk,Non-Mandatory
+Mother Dairy,Non-Mandatory
+FOODGRAIN shop,Non-Mandatory
+RICE shop,Non-Mandatory
+FLOUR mill,Non-Mandatory
+PAN SHOP,Non-Mandatory
+TOBACCO shop,Non-Mandatory
+PAAN STORE,Non-Mandatory
+SUPERMART,Non-Mandatory
+MORE supermarket,Non-Mandatory
+RELIANCE fresh,Non-Mandatory
+KIRANA store,Non-Mandatory
+NEIGHBOURHOOD store,Non-Mandatory
+CHEMIST shop,Non-Mandatory
+Medical store,Non-Mandatory
+Haircut salon,Non-Mandatory
+BARBER shop,Non-Mandatory
+BEAUTY parlour,Non-Mandatory
+SALON service,Non-Mandatory
+SPA treatment,Non-Mandatory
+GYM membership,Non-Mandatory
+FITNESS club,Non-Mandatory
+HEALTH club,Non-Mandatory
+Yoga class,Non-Mandatory
+Petrol pump,Non-Mandatory
+HP PETROL,Non-Mandatory
+BP PETROL,Non-Mandatory
+IOC PETROL,Non-MMandatory
+BPCL petrol,Non-Mandatory
+HPCL petrol,Non-Mandatory
+SHELL petrol,Non-Mandatory
+ fuel station,Non-Mandatory
+BUS ticket,Non-Mandatory
+AUTO rickshaw,Non-Mandatory
+Metro card,Non-Mandatory
+Metro recharge,Non-Mandatory
+Train ticket,Non-Mandatory
+IRCTC booking,Non-Mandatory
+RAILWAY ticket,Non-Mandatory
+SBI ATM withdrawal,Non-Mandatory
+HDFC ATM withdrawal,Non-Mandatory
+ICICI ATM withdrawal,Non-Mandatory
+AXIS ATM withdrawal,Non-Mandatory
+ATM cash withdrawal,Non-Mandatory
+NEFT transfer,Non-Mandatory
+IMPS transfer,Non-Mandatory
+UPI payment,Non-Mandatory
+BILL PAYMENT,Non-Mandatory
+RECHARGE payment,Non-Mandatory
+GOOGLE PAY,Non-Mandatory
+PHONEPE,Non-Mandatory
+PAYTM,Non-Mandatory
+BHIM UPI,Non-Mandatory
+Amazon pay,Non-Mandatory
+PhonePe merchant,Non-Mandatory
+UPI-ICICI,Non-Mandatory
+UPI-HDFC,Non-Mandatory
+UPI-SBI,Non-Mandatory
+WALLET payment,Non-Mandatory
+Debit card purchase,Non-Mandatory
+Credit card bill,Non-Mandatory
+LOYALTY points,Non-Mandatory
+CASHBACK reward,Non-Mandatory
+ZOMATO order,Luxury/Discretionary
+Swiggy order,Luxury/Discretionary
+Food delivery,Luxury/Discretionary
+Meesho shopping,Luxury/Discretionary
+Ajio shopping,Luxury/Discretionary
+Shein purchase,Luxury/Discretionary
+Myntra fashion,Luxury/Discretionary
+Flipkart fashion,Luxury/Discretionary
+Bewakoof order,Luxury/Discretionary
+Boat accessories,Luxury/Discretionary
+Noise smartwatch,Luxury/Discretionary
+Fireboltt watch,Luxury/Discretionary
+boat lifestyle,Luxury/Discretionary
+JBL audio,Luxury/Discretionary
+Sony headphones,Luxury/Discretionary
+Bose speaker,Luxury/Discretionary
+Samsung phone,Luxury/Discretionary
+OnePlus phone,Luxury/Discretionary
+iPhone purchase,Luxury/Discretionary
+MI phone,Luxury/Discretionary
+Realme phone,Luxury/Discretionary
+Vivo phone,Luxury/Discretionary
+Oppo phone,Luxury/Discretionary
+Laptop purchase,Luxury/Discretionary
+MacBook purchase,Luxury/Discretionary
+Dell laptop,Luxury/Discretionary
+HP laptop,Luxury/Discretionary
+Lenovo laptop,Luxury/Discretionary
+Asus laptop,Luxury/Discretionary
+Tablet purchase,Luxury/Discretionary
+iPad purchase,Luxury/Discretionary
+Smart TV,Luxury/Discretionary
+Samsung TV,Luxury/Discretionary
+LG TV,Luxury/Discretionary
+Sony TV,Luxury/Discretionary
+Air purifier,Luxury/Discretionary
+Water purifier,Luxury/Discretionary
+RO water,Luxury/Discretionary
+Vacuum cleaner,Luxury/Discretionary
+ Washing machine,Luxury/Discretionary
+Refrigerator,Luxury/Discretionary
+AC purchase,Luxury/Discretionary
+Air conditioner,Luxury/Discretionary
+Split AC,Luxury/Discretionary
+Fan purchase,Luxury/Discretionary
+Inverter battery,Luxury/Discretionary
+UPS battery,Luxury/Discretionary
+Furniture purchase,Luxury/Discretionary
+Sofa set,Luxury/Discretionary
+Dining table,Luxury/Discretionary
+Bed purchase,Luxury/Discretionary
+Mattress purchase,Luxury/Discretionary
+Interior decor,Luxury/Discretionary
+Home furnishing,Luxury/Discretionary
+Curtains purchase,Luxury/Discretionary
+Carpets shopping,Luxury/Discretionary
+Paint purchase,Luxury/Discretionary
+Cement purchase,Mandatory/Utilities
+Paint material,Mandatory/Utilities
+Hardware store,Mandatory/Utilities
+ plumber service,Mandatory/Utilities
+Electrician service,Mandatory/Utilities
+Carpenter service,Mandatory/Utilities
+MAINTENANCE charge,Mandatory/Utilities
+Property tax,Mandatory/Utilities
+House tax,Mandatory/Utilities
+Water tax,Mandatory/Utilities
+MUNICIPAL tax,Mandatory/Utilities
+Society charges,Mandatory/Utilities
+STAMP duty,Mandatory/Utilities
+Registration fee,Mandatory/Utilities
+Legal charges,Mandatory/Utilities
+CA fee,Mandatory/Utilities
+Consultation fee,Mandatory/Utilities
+Doctor consultation,Mandatory/Utilities
+LAB test,Mandatory/Utilities
+X-ray charges,Mandatory/Utilities
+MRI scan,Mandatory/Utilities
+CT scan,Mandatory/Utilities
+Blood test,Mandatory/Utilities
+Health checkup,Mandatory/Utilities
+Dental treatment,Mandatory/Utilities
+Eye hospital,Mandatory/Utilities
+SPECTACLES purchase,Mandatory/Utilities
+Lens purchase,Mandatory/Utilities
+MEDICINE purchase,Mandatory/Utilities
+Prescription drugs,Mandatory/Utilities
+SIP investment,Investment/Savings
+Mutual fund,Investment/Savings
+HDFC mutual fund,Investment/Savings
+ICICI mutual fund,Investment/Savings
+SBI mutual fund,Investment/Savings
+UTI mutual fund,Investment/Savings
+NIPPON fund,Investment/Savings
+AXIS fund,Investment/Savings
+DSP fund,Investment/Savings
+TATA fund,Investment/Savings
+KOTAK fund,Investment/Savings
+RELIANCE fund,Investment/Savings
+FRANKLIN fund,Investment/Savings
+DSP TOP 100,Investment/Savings
+Nifty 50 fund,Investment/Savings
+Index fund,Investment/Savings
+ELSS tax saver,Investment/Savings
+PPF contribution,Investment/Savings
+EPF contribution,Investment/Savings
+NPS contribution,Investment/Savings
+SSY contribution,Investment/Savings
+Fixed deposit,Investment/Savings
+FD placement,Investment/Savings
+RD deposit,Investment/Savings
+Recurring deposit,Investment/Savings
+TAX saver FD,Investment/Savings
+SBI FD,Investment/Savings
+HDFC FD,Investment/Savings
+ICICI FD,Investment/Savings
+Post office FD,Investment/Savings
+KVP investment,Investment/Savings
+NSC investment,Investment/Savings
+Sukanya Samriddhi,Investment/Savings
+Public provident fund,Investment/Savings
+Provident fund,Investment/Savings
+Employee PF,Investment/Savings
+VPF contribution,Investment/Savings
+Gold ETF,Investment/Savings
+Gold bond,Investment/Savings
+SGB Gold bond,Investment/Savings
+Sovereign gold,Investment/Savings
+Digital gold,Investment/Savings
+Mutual gold,Investment/Savings
+Stock purchase,Investment/Savings
+Share purchase,Investment/Savings
+Equity investment,Investment/Savings
+Demat account,Investment/Savings
+ZERODHA trading,Investment/Savings
+UPSTOX trading,Investment/Savings
+Groww investment,Investment/Savings
+ETMONEY investment,Investment/Savings
+CoinDCX crypto,Investment/Savings
+WazirX crypto,Investment/Savings
+Crypto investment,Investment/Savings
+Bitcoin purchase,Investment/Savings
+Coinbase buy,Investment/Savings
+NSE trade,Investment/Savings
+BSE trade,Investment/Savings
+Portfolio investment,Investment/Savings
+Stocks bought,Investment/Savings
+Shares bought,Investment/Savings
+TCS share,Investment/Savings
+INFOSYS share,Investment/Savings
+RELIANCE share,Investment/Savings
+HDFCBANK share,Investment/Savings
+ICICIBANK share,Investment/Savings
+SBIN share,Investment/Savings
+ITC share,Investment/Savings
+LT share,Investment/Savings
+SUNPHARMA share,Investment/Savings
+MARUTI share,Investment/Savings
+TATA Motors share,Investment/Savings
+BAJFINANCE share,Investment/Savings
+KOTAKBANK share,Investment/Savings
+AXISBANK share,Investment/Savings
+HCLTECH share,Investment/Savings
+WIPRO share,Investment/Savings
+TECHM share,Investment/Savings
+INFY share,Investment/Savings
+NESTLEIND share,Investment/Savings
+HINDUNILVR share,Investment/Savings
+TATASTEEL share,Investment/Savings
+JSWSTEEL share,Investment/Savings
+ULTRACEMCO share,Investment/Savings
+ADANIPORTS share,Investment/Savings
+TITAN share,Investment/Savings
+BAJJAUTO share,Investment/Savings
+CIPLA share,Investment/Savings
+DRREDDY share,Investment/Savings
+BHARTIARTL share,Investment/Savings
+DIVISLAB share,Investment/Savings
+GRASIM share,Investment/Savings
+HINDALCO share,Investment/Savings
+ITC share,Investment/Savings
+JINDALSTL share,Investment/Savings
+NTPC share,Investment/Savings
+ONGC share,Investment/Savings
+POWERGRID share,Investment/Savings
+RELIANCE share,Investment/Savings
+SBILIFE share,Investment/Savings
+SHREECEM share,Investment/Savings
+TATA MOTORS share,Investment/Savings
+TECHMA share,Investment/Savings
+TJOSHI share,Investment/Savings
+UBL share,Investment/Savings
+M&M share,Investment/Savings
+M&MFIN share,Investment/Savings
+MANAPPURAM share,Investment/Savings
+METROBRAND share,Investment/Savings
+MUTUALFUND NAV,Investment/Savings
+Smallcase investment,Investment/Savings
+THEMATIC fund,Investment/Savings
+Sector fund,Investment/Savings
+International fund,Investment/Savings
+US equity fund,Investment/Savings
+SENSEX fund,Investment/Savings
+NIFTY fund,Investment/Savings
+Nifty Next 50,Investment/Savings
+Midcap fund,Investment/Savings
+Smallcap fund,Investment/Savings
+Largecap fund,Investment/Savings
+Flexicap fund,Investment/Savings
+Bluechip fund,Investment/Savings
+Momentum fund,Investment/Savings
+Value fund,Investment/Savings
+Contra fund,Investment/Savings
+Dividend yield fund,Investment/Savings
+Growth fund,Investment/Savings
+Balanced fund,Investment/Savings
+Debt fund,Investment/Savings
+Liquid fund,Investment/Savings
+Overnight fund,Investment/Savings
+Money market fund,Investment/Savings
+Corporate bond fund,Investment/Savings
+Gilt fund,Investment/Savings
+Credit risk fund,Investment/Savings
+Low duration fund,Investment/Savings
+Short duration fund,Investment/Savings
+Medium duration fund,Investment/Savings
+Long duration fund,Investment/Savings
+Banking fund,Investment/Savings
+Pharma fund,Investment/Savings
+IT fund,Investment/Savings
+FMCG fund,Investment/Savings
+Auto fund,Investment/Savings
+Infrastructure fund,Investment/Savings
+Real estate fund,Investment/Savings
+Portfolio Management,Investment/Savings
+PMS investment,Investment/Savings
+AIF investment,Investment/Savings
+Alternative investment,Investment/Savings
+Angels investment,Investment/Savings
+Startup investment,Investment/Savings
+Crowdfunding,Investment/Savings
+REVERSE EMI,Adjustment
+ADJUSTMENT entry,Adjustment
+ROUND OFF,Adjustment
+BALANCE brought forward,Adjustment
+OPENING balance,Adjustment
+CLOSING balance,Adjustment
+CORRECTION entry,Adjustment
+REFUND received,Adjustment
+REFUND processed,Adjustment
+CHARGE reversal,Adjustment
+WAIVER adjustment,Adjustment
+INTEREST reversal,Adjustment
+COMMISSION reversal,Adjustment
+EXCESS credited,Adjustment
+SHORT credited,Adjustment
+CORRECTION CREDIT,Adjustment
+CORRECTION DEBIT,Adjustment
+ERROR correction,Adjustment
+CLEARING entry,Adjustment
+SETTLEMENT entry,Adjustment
+INTEREST earned,Adjustment
+FD interest,Adjustment
+RD interest,Adjustment
+Savings interest,Adjustment
+LOAN interest,Adjustment
+ Penal interest,Adjustment
+ Interest waiver,Adjustment
+Processing fee waiver,Adjustment
+Foreclosure rebate,Adjustment
+Prepayment benefit,Adjustment
+BILL DESK,Adjustment
+BBPS transaction,Adjustment
+AUTOPAY setup,Adjustment
+STANDING instruction,Adjustment
+SIP mandate,Adjustment
+SALARY credited,Adjustment
+SALARY transfer,Adjustment
+WAGES credited,Adjustment
+PENSION credited,Adjustment
+PENSION transfer,Adjustment
+ALLOWANCE credited,Adjustment
+BONUS credited,Adjustment
+INCENTIVE credited,Adjustment
+COMMISSION credited,Adjustment
+PROFESSIONAL fee,Adjustment
+CONSULTING fee,Adjustment
+ADVISORY fee,Adjustment
+BROKERAGE fee,Adjustment
+MARKET fee,Adjustment
+SEBI fee,Adjustment
+STAMP duty,Adjustment
+STT charge,Adjustment
+GST payment,Adjustment
+TDS deducted,Adjustment
+TCS collected,Adjustment
+STATUTORY payment,Adjustment
+RAILWAY RESERVATION,Travel
+IRCTC TICKET,Travel
+RAIL RESERVATION,Travel
+PNR CONFIRMATION,Travel
+TATKAL BOOKING,Travel
+VISTARA flight,Travel
+AIRASIA flight,Travel
+INDIGO booking,Travel
+ spicejet booking,Travel
+GOAIR booking,Travel
+AIR INDIA booking,Travel
+FLIGHT BOOKING,Travel
+HOTEL BOOKING,Travel
+BOOKING COM,Travel
+AGODA hotel,Travel
+TRIVAGO hotel,Travel
+OYO STAY,Travel
+TREEBO hotel,Travel
+FABHOTELS,Travel
+ZOHO STAY,Travel
+RESORT booking,Travel
+VACATION rental,Travel
+Holiday package,Travel
+Travel insurance,Travel
+TRIP insurance,Travel
+Foreign exchange,Travel
+Currency purchase,Travel
+Forex transfer,Travel
+Wire transfer abroad,Travel
+Remittance,Travel
+TT transfer,Travel
+SWIFT transfer,Travel
+International transfer,Travel
+Forex conversion,Travel

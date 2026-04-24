@@ -1,0 +1,24 @@
+# Secrets
+.env
+*.env
+
+# Local data
+instance/
+*.db
+
+# Python cache
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# Generated/Build
+graphify-out/
+.opencode/
+node_modules/
+opencode.json
+# OS
+.DS_Store
+Thumbs.db
+
+AGENTS.md

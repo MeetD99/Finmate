@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --color-fin-background: #fcf8fa;
+  --color-fin-surface: #ffffff;
+  --color-fin-primary: #0f172a;
+  --color-fin-primary-container: #131b2e;
+  --color-fin-accent: #059669;
+  --color-fin-secondary: #505f76;
+  --color-fin-text-main: #1b1b1d;
+  --color-fin-text-variant: #45464d;
+  --color-fin-outline: #76777d;
+  --color-fin-outline-variant: #c6c6cd;
+  --color-fin-surface-low: #f6f3f5;
+  --color-fin-surface-high: #eae7e9;
+  
+  --radius-fin-sm: 0.25rem;
+  --radius-fin-md: 0.5rem;
+  --radius-fin-lg: 0.75rem;
+  --radius-fin-xl: 1rem;
+}
+
+.finadvisor-page {
+  font-family: "Inter", sans-serif;
+  background-color: var(--color-fin-background);
+  color: var(--color-fin-text-main);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient Shadows */
+.fin-shadow-sm {
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
+}
+.fin-shadow-md {
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+.fin-shadow-lg {
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+}
+
+/* Custom Scrollbar */
+.card-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.card-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 15px 0;
+}
+.card-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--color-fin-outline-variant);
+  border-radius: 4px;
+}
+.card-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: var(--color-fin-outline);
+}

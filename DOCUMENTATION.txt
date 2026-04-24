@@ -1,0 +1,368 @@
+================================================================================
+                            FINMATE DOCUMENTATION
+================================================================================
+
+--------------------------------------------------------------------------------
+1. PROBLEM STATEMENT
+--------------------------------------------------------------------------------
+
+Why are students and freshers not able to understand how and what to invest in early on?
+
+India has over 50 million young adults entering the workforce every year, yet most lack
+basic financial literacy. The gap between "having money to save" and "knowing where
+to invest" creates a massive barrier to wealth building.
+
+Key Challenges:
+- Complex financial jargon (SIP, ELSS, NPS, market timing)
+- Overwhelming number of investment options
+- No personalized guidance based on individual financial profiles
+- Fear of making wrong investment decisions
+- Lack of hands-on experience with tracking finances
+
+Finmate solves this by providing:
+✓ Interactive risk profiling to understand personal appetite
+✓ Curated portfolio templates designed for Indian beginners
+✓ Transaction import and expense analysis
+✓ AI-powered financial assistant (MulyaAI) for instant Q&A
+✓ Progress tracking and visualizations
+
+--------------------------------------------------------------------------------
+2. CORE FEATURES
+--------------------------------------------------------------------------------
+
+2.1 USER AUTHENTICATION
+- Registration with email/password
+- Login/Logout functionality
+- Profile management
+- Secure session handling
+
+2.2 RISK PROFILE ASSESSMENT
+- Questionnaire-based risk profiling
+- Factors: age, income, dependents, employment type, emergency fund, investment horizon
+- Risk score calculation (1-100 scale)
+- Risk category classification: Conservative / Moderate / Aggressive
+
+2.3 PORTFOLIO TEMPLATES
+Four ready-made Indian-themed portfolio templates:
+
+| Template    | Risk Level | Target Users                    | Min Investment |
+|------------|-----------|-------------------------------|---------------|
+| Shuruaat   | Low      | Students, beginners           | ₹500/month    |
+| Junglee    | Moderate | Growing investors           | ₹5,000/month  |
+| Chakravyuh | Balanced | Intermediate investors      | ₹15,000/month |
+| Dhoom      | High     | Aggressive growth seekers  | ₹25,000/month |
+
+Each template includes:
+- Asset allocation (low-risk, mid-risk, high-risk mix)
+- Recommended Indian financial instruments (PPF, Mutual Funds, FDs, Stocks)
+- Expected return rates
+- Lock-in periods and risk indicators
+
+2.4 PERSONALIZED PORTFOLIO GENERATION
+- AI-generated portfolios based on user's risk profile
+- Custom target allocation percentages
+- Trim allocation updates (Needs/Wants/Savings framework)
+- Historical portfolio snapshots
+
+2.5 TRANSACTION MANAGEMENT
+- CSV/Excel file import (Date, Description, Withdrawal, Deposit, Balance)
+- Automatic categorization (Mandatory, Luxury, Non-Mandatory, Income)
+- Data visualization with pie charts and area charts
+- Monthly/yearly spending analysis
+- Import history tracking
+
+2.6 EXPENSE TRACKING
+- Manual expense entry
+- Category-based tracking
+- Grouped expense views
+- Link to transactions for reconciliation
+
+2.7 DASHBOARD
+- Real-time financial overview
+- Portfolio allocation visualization
+- Recent transaction history
+- Net worth calculation
+- Data import/export functionality
+
+2.8 KNOWLEDGE CENTER
+- Financial education content
+- Investment learning plans
+- AI-generated study guides
+
+2.9 MULYAAI - FINANCIAL CHATBOT
+- AI-powered financial Q&A assistant
+- Persistent conversation memory
+- Personalized advice based on user's financial profile
+- Reference to user's portfolio, transactions, and history
+- Concise, actionable responses
+- Indian financial product knowledge
+
+--------------------------------------------------------------------------------
+3. MULTI-AGENT ARCHITECTURE
+--------------------------------------------------------------------------------
+
+Finmate uses a Multi-Agent AI Workflow where specialized agents collaborate
+to provide comprehensive financial guidance. Each agent has a specific role:
+
++---------------------+---------------------------------------------------+
+| AGENT               | DESCRIPTION                                       |
++---------------------+---------------------------------------------------+
+| MulyaAI (Chat Bot)  | Financial Q&A assistant with persistent memory.   |
+|                    | Uses Groq LLM with custom system prompt.         |
+|                    | Has access to user's profile, portfolio, and     |
+|                    | transaction history for personalization.           |
+|                    |                                       |
+|                    | Features:                              |
+|                    | - Persistent conversation context        |
+|                    | - User profile integration           |
+|                    | - Transaction history reference    |
+|                    | - Financial expertise (tax, investing)|
+|                    | - Concise response format           |
++---------------------+---------------------------------------------------+
+| Portfolio Agent     | Generates personalized portfolios based    |
+|                    | on user's risk profile and goals.     |
+|                    | Uses Groq LLM to create custom     |
+|                    | allocation strategies.             |
+|                    |                                       |
+|                    | Features:                              |
+|                    | - Risk-based allocation           |
+|                    | - Template selection             |
+|                    | - Custom asset recommendations      |
+|                    | - Growth trajectory planning     |
++---------------------+---------------------------------------------------+
+| Risk Agent        | Analyzes user's risk appetite     |
+|                    | through questionnaire responses.   |
+|                    | Computes risk score (1-100).       |
+|                    |                                       |
+|                    | Features:                              |
+|                    | - Questionnaire processing        |
+|                    | - Score calculation             |
+|                    | - Category classification       |
+|                    | - LLM-generated advice          |
++---------------------+---------------------------------------------------+
+| Asset Agent       | Fetches live market data and      |
+|                    | provides asset recommendations.      |
+|                    | Integrates with Yahoo Finance   |
+|                    | for Indian stocks.               |
+|                    |                                       |
+|                    | Features:                              |
+|                    | - Live price fetching            |
+|                    | - Indian stock symbols            |
+|                    | - Portfolio optimization       |
+|                    | - Asset rebalancing suggestions  |
++---------------------+---------------------------------------------------+
+| Transaction      | Processes uploaded financial     |
+| Processing Agent | documents and extracts         |
+|                    | transaction data.              |
+|                    |                                       |
+|                    | Features:                              |
+|                    | - CSV/Excel parsing             |
+|                    | - Auto-categorization           |
+|                    | - Duplicate detection          |
+|                    | - Balance calculation          |
++---------------------+---------------------------------------------------+
+| Trim Agent       | Optimizes portfolio allocation  |
+|                    | using 50/30/20 or custom     |
+|                    | Needs/Wants/Savings framework.  |
+|                    |                                       |
+|                    | Features:                              |
+|                    | - Budget framework             |
+|                    | - Trim calculations           |
+|                    | - Surplus identification      |
+|                    | - Optimization suggestions   |
++---------------------+---------------------------------------------------+
+
+AGENT COLLABORATION FLOW:
+
+1. User registers → Risk Agent assesses risk profile
+2. Profile complete → Portfolio Agent generates personalized portfolio
+3. Portfolio saved → User can import transactions
+4. Ongoing → MulyaAI answers questions referencing all data
+5. Periodic → Asset Agent fetches live prices
+6. Optimizations → Trim Agent suggests improvements
+
+--------------------------------------------------------------------------------
+4. TECHNOLOGY STACK
+--------------------------------------------------------------------------------
+
+FRONTEND:
+- React 19
+- Vite (build tool)
+- Tailwind CSS 4
+- Recharts (visualizations)
+- React Router DOM
+- Axios (HTTP client)
+
+BACKEND:
+- Flask 3 (Python web framework)
+- SQLAlchemy (ORM)
+- PostgreSQL (database)
+- Groq API (LLM inference)
+- Python-dotenv (environment variables)
+
+DATABASE MODELS:
+- User
+- RiskProfile
+- Transaction
+- Summary
+- Portfolio
+- Expense
+- ChatHistory
+
+--------------------------------------------------------------------------------
+5. API ENDPOINTS
+--------------------------------------------------------------------------------
+
+AUTH: /api/auth
+- POST /register
+- POST /login
+- POST /logout
+- GET /me
+- PUT /profile
+
+RISK: /api/risk-profile
+- POST (create profile)
+- GET (retrieve profile)
+- POST /appetite/submit (submit questionnaire)
+
+TRANSACTIONS: /api/transactions
+- POST (create)
+- GET (list all)
+- DELETE (clear)
+
+PORTFOLIO: /api/portfolio
+- POST (create)
+- GET (retrieve)
+- PUT (update)
+- PUT /trim (update allocations)
+- GET /history (view history)
+
+CHAT: /api/chat
+- GET /history (retrieve messages)
+- POST /query (send message to MulyaAI)
+- POST /clear (clear history)
+
+UPLOAD: /api/upload
+- POST (import file)
+
+EXPENSES: /api/expenses
+- GET /grouped (view by category)
+
+INSIGHTS: /api/insights
+- GET (financial insights)
+
+SUMMARY: /api/summary
+- GET (monthly/yearly summary)
+
+--------------------------------------------------------------------------------
+6. PROJECT STRUCTURE
+--------------------------------------------------------------------------------
+
+BNP/
+├── client/                  # React frontend
+│   ├── src/
+│   │   ├── components/   # Reusable UI components (MoneyBuddy)
+│   │   ├── context/    # React contexts (Auth, Chat, Toast)
+│   │   ├── pages/     # Page components
+│   │   ├── services/  # API service layer
+│   │   └── App.jsx   # Main app entry
+│   └── package.json
+│
+├── server/                # Flask backend
+│   ├── routes/          # API endpoints
+│   ├── models/         # Database models
+│   ├── services/       # Agent implementations
+│   ├── controllers/    # Business logic
+│   ├── app.py         # Flask app
+│   └── .env         # Environment configuration
+│
+└── DOCUMENTATION.txt    # This file
+
+--------------------------------------------------------------------------------
+7. GETTING STARTED
+--------------------------------------------------------------------------------
+
+PREREQUISITES:
+- Python 3.9+
+- Node.js 18+
+- PostgreSQL (local or cloud like Supabase)
+- Groq API key
+
+INSTALLATION:
+
+Frontend:
+  cd client
+  npm install
+  npm run dev     # Runs on http://localhost:5173
+
+Backend:
+  cd server
+  pip install -r requirements.txt
+  python setup.py  # First-time setup
+  python run.py     # Runs on http://localhost:8080
+
+ENVIRONMENT VARIABLES:
+  DATABASE_URL=postgresql://user:password@host:5432/dbname
+  GROQ_API_KEY=<your-groq-api-key>
+  ALPHA_VANTAGE_API_KEY=<optional-for-stock-prices>
+  PINECONE_API_KEY=<your-pinecone-api-key>
+  PINECONE_ENVIRONMENT=us-east-1
+  PINECONE_INDEX_NAME=finmate-transactions
+
+================================================================================
+7B. VECTOR DATABASE SETUP
+================================================================================
+
+The application uses Pinecone for vector-based transaction categorization.
+This enables automatic categorization of bank transactions based on
+description similarity.
+
+1. CREATE PINECONE ACCOUNT
+   - Sign up at https://www.pinecone.io/
+   - Create a new index: finmate-transactions
+   - Dimensions: 384 (for all-MiniLM-L6-v2 model)
+   - Metric: cosine
+
+2. SEED THE VECTOR DATABASE
+   From the server directory:
+   ```bash
+   cd server
+   python -c "from controllers.vector_db.upload_to_vector_db import seed_from_csv; seed_from_csv()"
+   ```
+
+3. EXPECTED CSV FORMAT
+   If using your own data file (place in server/data/):
+   ```csv
+   description,category
+   Salary,Income
+   Shopping,Expenses
+   Grocery,Food
+   Rent,Housing
+   ...
+   ```
+
+The vector DB automatically generates embeddings using the all-MiniLM-L6-v2
+model and stores them in Pinecone for fast similarity search.
+
+--------------------------------------------------------------------------------
+8. KEY DESIGN PRINCIPLES
+--------------------------------------------------------------------------------
+
+✓ START SMALL - Even ₹500/month builds the habit
+✓ EXPLAIN EVERYTHING - Define financial jargon instantly
+✓ RELATE TO THEIR LIFE - Use relatable examples
+✓ BUILD CONFIDENCE - Celebrate asking questions
+✓ EMERGENCY FUND FIRST - Foundation of all investing
+
+--------------------------------------------------------------------------------
+9. LIMITATIONS & DISCLAIMERS
+--------------------------------------------------------------------------------
+
+- MulyaAI provides educational information, not personalized investment advice
+- Always recommend consulting certified financial planners for complex decisions
+- Past performance doesn't guarantee future returns
+- Investment involve risks; consider risk tolerance before investing
+
+================================================================================
+Document Version: 1.0
+================================================================================

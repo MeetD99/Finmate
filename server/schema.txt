@@ -1,0 +1,38 @@
+table RiskProfile:
+    risk_id: Unique 
+    user_id: foreign key to user table
+    age: int
+    monthly_income: int
+    EMI_burden: int
+    dependants: int
+    employment_type: int
+    risk_score: int
+    risk_category: int
+
+table transaction:
+    transaction_id
+    user_id: foreign key to user table
+    desc: string
+    amount: int
+    type: (Withdraw or Deposit strings)
+    date: date
+    category: out of 6 - [Mandatory/Utilities, Non-Mandatory, Luxury/Discretionary, Travel, Investment/Savings, Adjustment]
+
+table summary:
+    month: string
+    year: string
+    spending: int
+    savings: int
+    user_id: foreign key to user table
+
+table portfolio:
+    surplus: int
+    user_id: foreign key to user table
+    luxury: int
+    total: int
+    non-mandatory: int
+    high: int
+    mid: int
+    low: int
+    l-trim: int
+    n-trim: int
