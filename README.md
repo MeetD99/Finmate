@@ -70,7 +70,7 @@ The application uses Pinecone for vector-based transaction categorization to aut
 
 ### 1. Create Pinecone Account
 - Sign up at [pinecone.io](https://www.pinecone.io/)
-- Create a new index named `finmate-transactions`
+- Create a new index named `finmate`
 - Use dimension: 384 (default for all-MiniLM-L6-v2)
 - Metric: cosine
 
