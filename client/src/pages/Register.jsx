@@ -41,7 +41,7 @@ const Register = () => {
       localStorage.removeItem('finmateData');
       localStorage.removeItem('riskAppetiteData');
       
-      await axios.post("http://localhost:8080/api/auth/register", formData);
+      await axios.post("https://finmate-vnfb.onrender.com/api/auth/register", formData);
       showSuccess("Account created successfully!");
       await login({ email: formData.email, password: formData.password });
       navigate("/");

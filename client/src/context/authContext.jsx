@@ -28,7 +28,7 @@ export const AuthContextProvider = ({children}) => {
 
     const login = async (inputs) => {
         try {
-            const res = await axios.post("http://localhost:8080/api/auth/login", inputs);
+            const res = await axios.post("https://finmate-vnfb.onrender.com/api/auth/login", inputs);
             
             // Clear any existing user data before setting new user
             clearUserData();
@@ -42,7 +42,7 @@ export const AuthContextProvider = ({children}) => {
 
     const logout = async () => {
         try {
-            await axios.post("http://localhost:8080/api/auth/logout");
+            await axios.post("https://finmate-vnfb.onrender.com/api/auth/logout");
         } catch (error) {
             console.error('Logout API error:', error);
         } finally {

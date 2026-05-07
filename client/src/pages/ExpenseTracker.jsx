@@ -48,7 +48,7 @@ const ExpenseTracker = () => {
 
   const fetchExpenses = async () => {
     try {
-      const url = `http://localhost:8080/api/expenses?user_id=${userId}`
+      const url = `https://finmate-vnfb.onrender.com/api/expenses?user_id=${userId}`
       const response = await fetch(url, {
         method: 'GET',
         credentials: 'include'
@@ -66,7 +66,7 @@ const ExpenseTracker = () => {
 
   const fetchGroupedExpenses = async () => {
     try {
-      const url = `http://localhost:8080/api/expenses/grouped?user_id=${userId}`
+      const url = `https://finmate-vnfb.onrender.com/api/expenses/grouped?user_id=${userId}`
       const response = await fetch(url, {
         method: 'GET',
         credentials: 'include'
@@ -108,7 +108,7 @@ const ExpenseTracker = () => {
 
     try {
       const payload = { ...formData, user_id: userId }
-      const response = await fetch('http://localhost:8080/api/expenses', {
+      const response = await fetch('https://finmate-vnfb.onrender.com/api/expenses', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -144,7 +144,7 @@ const ExpenseTracker = () => {
 
     try {
       const payload = { ...formData, user_id: userId }
-      const response = await fetch(`http://localhost:8080/api/expenses/${editingExpense.id}?user_id=${userId}`, {
+      const response = await fetch(`https://finmate-vnfb.onrender.com/api/expenses/${editingExpense.id}?user_id=${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -176,7 +176,7 @@ const ExpenseTracker = () => {
 
   const handleDelete = async (id) => {
     try {
-      const url = `http://localhost:8080/api/expenses/${id}?user_id=${userId}`
+      const url = `https://finmate-vnfb.onrender.com/api/expenses/${id}?user_id=${userId}`
       const response = await fetch(url, {
         method: 'DELETE',
         credentials: 'include'
@@ -200,7 +200,7 @@ const ExpenseTracker = () => {
     
     try {
       const deletePromises = selectedExpenses.map(id => 
-        fetch(`http://localhost:8080/api/expenses/${id}?user_id=${userId}`, {
+        fetch(`https://finmate-vnfb.onrender.com/api/expenses/${id}?user_id=${userId}`, {
           method: 'DELETE',
           credentials: 'include'
         })

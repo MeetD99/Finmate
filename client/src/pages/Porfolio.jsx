@@ -14,7 +14,7 @@ import {
   ResponsiveContainer
 } from 'recharts'
 
-const API_BASE = 'http://localhost:8080/api'
+const API_BASE = 'https://finmate-vnfb.onrender.com/api'
 
 const Portfolio = () => {
   const navigate = useNavigate()

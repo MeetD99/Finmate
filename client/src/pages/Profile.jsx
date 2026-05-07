@@ -23,7 +23,7 @@ const Profile = () => {
 
   const fetchUser = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/auth/me", {
+      const response = await fetch("https://finmate-vnfb.onrender.com/api/auth/me", {
         credentials: "include",
       });
       if (response.ok) {
@@ -57,7 +57,7 @@ const Profile = () => {
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/api/auth/profile", {
+      const response = await fetch("https://finmate-vnfb.onrender.com/api/auth/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -89,7 +89,7 @@ const Profile = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/api/auth/password", {
+      const response = await fetch("https://finmate-vnfb.onrender.com/api/auth/password", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

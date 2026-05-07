@@ -27,7 +27,7 @@ const InvestmentKnowledgeCenter = () => {
   const fetchLearningPlan = React.useCallback(async () => {
     try {
       setIsLoadingPlan(true);
-      const response = await fetch('http://localhost:8080/api/knowledge/learning-plan', {
+      const response = await fetch('https://finmate-vnfb.onrender.com/api/knowledge/learning-plan', {
         method: 'GET',
         credentials: 'include'
       });

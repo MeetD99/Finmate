@@ -1,4 +1,4 @@
-export const API_BASE = 'http://localhost:8080/api';
+export const API_BASE = 'https://finmate-vnfb.onrender.com/api';
 
 export const chatService = {
   async sendMessage(query) {

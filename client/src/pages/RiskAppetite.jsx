@@ -22,7 +22,7 @@ const RiskAppetite = () => {
 
   const fetchExistingProfile = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/risk-profile", {
+      const response = await fetch("https://finmate-vnfb.onrender.com/api/risk-profile", {
         credentials: "include",
       });
       if (response.ok) {
@@ -54,7 +54,7 @@ const RiskAppetite = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:8080/api/risk-appetite/submit', {
+      const response = await fetch('https://finmate-vnfb.onrender.com/api/risk-appetite/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
