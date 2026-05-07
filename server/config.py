@@ -29,11 +29,14 @@ class Config:
     SQLALCHEMY_DATABASE_URI = get_database_uri()
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
-    CORS_ORIGINS = [
+    CORS_ORIGINS = os.getenv('CORS_ORIGINS', '').split(',') or [
         'http://localhost:5173',
         'http://localhost:3000',
         'http://127.0.0.1:5173',
-        'http://127.0.0.1:3000'
+        'http://127.0.0.1:3000',
+        'https://finmate-vnfb.onrender.com',
+        # Allow Railway domain (wildcard for any subdomain)
+        '*'
     ]
 
 class DevelopmentConfig(Config):

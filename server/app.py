@@ -29,8 +29,8 @@ app.config.from_object(config[config_name])
 db.init_app(app)
 CORS(app, supports_credentials=True, origins=app.config['CORS_ORIGINS'])
 
-app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-app.config['SESSION_COOKIE_SECURE'] = False
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+app.config['SESSION_COOKIE_SECURE'] = True
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(risk_bp)
