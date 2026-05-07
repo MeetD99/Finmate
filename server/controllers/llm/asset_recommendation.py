@@ -2,6 +2,7 @@ from groq import Groq
 import json
 import re
 from dotenv import load_dotenv, find_dotenv
+import os
 
 doten_path = find_dotenv()
 load_dotenv(dotenv_path=doten_path)
