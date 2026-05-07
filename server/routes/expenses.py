@@ -1,17 +1,16 @@
-from flask import Blueprint, request, jsonify, g
+from flask import Blueprint, request, jsonify, session
 from datetime import datetime
 from collections import defaultdict
 
 expenses_bp = Blueprint('expenses', __name__, url_prefix='/api/expenses')
 
 from models import db, Expense
-from decorators import jwt_required
 
 
 def get_user_id():
-    if hasattr(g, 'user_id') and g.user_id:
-        return g.user_id
-    user_id = request.args.get('user_id', type=int)
+    user_id = session.get('user_id')
+    if not user_id:
+        user_id = request.args.get('user_id', type=int)
     return user_id
 
 
@@ -150,10 +149,11 @@ def delete_expense(expense_id):
 
 
 @expenses_bp.route('/import-to-transactions', methods=['POST'])
-@jwt_required
 def import_to_transactions():
     try:
-        user_id = g.user_id
+        user_id = session.get('user_id')
+        if not user_id:
+            return jsonify({'detail': 'Not authenticated. Login required to import.'}), 401
 
         from models import Transaction, TransactionType, TransactionCategory, Summary
         from services.transaction_service import categorize_transaction

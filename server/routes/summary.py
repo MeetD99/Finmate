@@ -1,18 +1,18 @@
-from flask import Blueprint, request, jsonify, g
+from flask import Blueprint, request, jsonify, session
 from sqlalchemy import extract
 import calendar
 
 summary_bp = Blueprint('summary', __name__, url_prefix='/api/summary')
 
 from models import db, Summary
-from decorators import jwt_required
 
 
 @summary_bp.route('', methods=['POST'])
-@jwt_required
 def create_summary():
     try:
-        user_id = g.user_id
+        user_id = session.get('user_id')
+        if not user_id:
+            return jsonify({'detail': 'Not authenticated'}), 401
 
         data = request.get_json()
         required_fields = ['month', 'year', 'spending', 'savings']
@@ -48,10 +48,11 @@ def create_summary():
 
 
 @summary_bp.route('', methods=['GET'])
-@jwt_required
 def get_summaries():
     try:
-        user_id = g.user_id
+        user_id = session.get('user_id')
+        if not user_id:
+            return jsonify({'detail': 'Not authenticated'}), 401
 
         summaries = Summary.query.filter_by(user_id=user_id).order_by(Summary.year.desc(), Summary.month.desc()).all()
         return jsonify([s.to_dict() for s in summaries]), 200
@@ -61,10 +62,11 @@ def get_summaries():
 
 
 @summary_bp.route('/chart-data', methods=['GET'])
-@jwt_required
 def get_chart_data():
     try:
-        user_id = g.user_id
+        user_id = session.get('user_id')
+        if not user_id:
+            return jsonify({'detail': 'Not authenticated'}), 401
 
         summaries = Summary.query.filter_by(user_id=user_id).order_by(Summary.year.asc(), Summary.month.asc()).all()
 

@@ -8,11 +8,8 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password_hash = db.Column(db.Text, nullable=True)
+    password_hash = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    oauth_provider = db.Column(db.String(20), nullable=True)
-    oauth_provider_id = db.Column(db.String(100), nullable=True)
-    refresh_token = db.Column(db.Text, nullable=True)
 
     risk_profiles = db.relationship('RiskProfile', backref='user', lazy=True, cascade='all, delete-orphan')
     transactions = db.relationship('Transaction', backref='user', lazy=True, cascade='all, delete-orphan')

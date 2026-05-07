@@ -1,17 +1,17 @@
-from flask import Blueprint, request, jsonify, g
+from flask import Blueprint, request, jsonify, session
 from datetime import datetime
 
 transactions_bp = Blueprint('transactions', __name__, url_prefix='/api/transactions')
 
 from models import db, Transaction, TransactionType, TransactionCategory
-from decorators import jwt_required
 
 
 @transactions_bp.route('', methods=['POST'])
-@jwt_required
 def create_transaction():
     try:
-        user_id = g.user_id
+        user_id = session.get('user_id')
+        if not user_id:
+            return jsonify({'detail': 'Not authenticated'}), 401
 
         data = request.get_json()
         required_fields = ['desc', 'amount', 'type', 'date', 'category']
@@ -47,10 +47,11 @@ def create_transaction():
 
 
 @transactions_bp.route('', methods=['GET'])
-@jwt_required
 def get_transactions():
     try:
-        user_id = g.user_id
+        user_id = session.get('user_id')
+        if not user_id:
+            return jsonify({'detail': 'Not authenticated'}), 401
 
         transactions = Transaction.query.filter_by(user_id=user_id).order_by(Transaction.date.desc()).all()
         return jsonify([t.to_dict() for t in transactions]), 200

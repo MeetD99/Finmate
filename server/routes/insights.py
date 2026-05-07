@@ -1,9 +1,7 @@
-from flask import Blueprint, jsonify, g
+from flask import Blueprint, jsonify, session
 import json
 from groq import Groq
 import os
-
-from decorators import jwt_required
 
 insights_bp = Blueprint('insights', __name__, url_prefix='/api')
 
@@ -22,9 +20,10 @@ def _get_groq_client():
 
 
 @insights_bp.route('/dashboard/insights', methods=['GET'])
-@jwt_required
 def get_dashboard_insights():
-    user_id = g.user_id
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'detail': 'Authentication required'}), 401
 
     try:
         from models import Summary, Portfolio
@@ -92,9 +91,10 @@ Output ONLY JSON array with keys: "type" (saving/alert/goal), "text" (max 12 wor
 
 
 @insights_bp.route('/knowledge/learning-plan', methods=['GET'])
-@jwt_required
 def get_learning_plan():
-    user_id = g.user_id
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'detail': 'Authentication required'}), 401
 
     try:
         from models import Portfolio
