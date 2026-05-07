@@ -8,3 +8,5 @@ openpyxl
 pinecone
 groq
 psycopg2-binary
+requests
+tqdm
