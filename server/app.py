@@ -64,4 +64,8 @@ def internal_error(error):
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    # Use Railway-provided PORT if available, otherwise default to 8080
+    port = int(os.getenv('PORT', 8080))
+    # Turn off debug when running in production mode
+    debug = os.getenv('FLASK_ENV') == 'development'
+    app.run(debug=debug, host='0.0.0.0', port=port)
