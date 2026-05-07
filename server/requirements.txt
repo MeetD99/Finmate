@@ -5,6 +5,6 @@ Werkzeug
 python-dotenv
 pandas
 openpyxl
-pinecone-client
+pinecone
 groq
 psycopg2-binary
