@@ -1,18 +1,19 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify, g
 from services.chat_service import (
     process_chat_message,
     get_chat_history,
     clear_chat_history
 )
 
+from decorators import jwt_required
+
 chat_bp = Blueprint('chat', __name__, url_prefix='/api/chat')
 
 
 @chat_bp.route('/history', methods=['GET'])
+@jwt_required
 def get_chat_history_route():
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
+    user_id = g.user_id
     
     try:
         limit = request.args.get('limit', 20, type=int)
@@ -23,10 +24,9 @@ def get_chat_history_route():
 
 
 @chat_bp.route('/query', methods=['POST'])
+@jwt_required
 def send_query():
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
+    user_id = g.user_id
     
     try:
         data = request.get_json()
@@ -54,10 +54,9 @@ def send_query():
 
 
 @chat_bp.route('/clear', methods=['POST'])
+@jwt_required
 def clear_history():
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
+    user_id = g.user_id
     
     try:
         success = clear_chat_history(user_id)

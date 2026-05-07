@@ -26,8 +26,10 @@ config_name = os.environ.get('FLASK_ENV', 'development')
 from config import config
 app.config.from_object(config[config_name])
 
+app.secret_key = app.config.get('SECRET_KEY') or 'dev-secret-key'
+
 db.init_app(app)
-CORS(app, supports_credentials=True, origins=['https://finmate-sable.vercel.app'])
+CORS(app, supports_credentials=True, origins=['https://finmate-sable.vercel.app'], allow_headers=['Content-Type', 'Authorization'])
 
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 app.config['SESSION_COOKIE_SECURE'] = True

@@ -1,18 +1,18 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify, g
 import calendar
 from sqlalchemy import extract
 
 portfolio_bp = Blueprint('portfolio', __name__, url_prefix='/api/portfolio')
 
 from models import db, Portfolio, Summary, Transaction
+from decorators import jwt_required
 
 
 @portfolio_bp.route('', methods=['POST'])
+@jwt_required
 def create_portfolio():
     try:
-        user_id = session.get('user_id')
-        if not user_id:
-            return jsonify({'detail': 'Not authenticated'}), 401
+        user_id = g.user_id
 
         data = request.get_json()
         required_fields = ['surplus', 'luxury', 'total', 'non_mandatory', 'high', 'mid', 'low', 'l_trim', 'n_trim']
@@ -44,11 +44,10 @@ def create_portfolio():
 
 
 @portfolio_bp.route('', methods=['GET'])
+@jwt_required
 def get_portfolio():
     try:
-        user_id = session.get('user_id')
-        if not user_id:
-            return jsonify({'detail': 'Not authenticated'}), 401
+        user_id = g.user_id
 
         portfolio = Portfolio.query.filter_by(user_id=user_id).first()
         if not portfolio:
@@ -61,11 +60,10 @@ def get_portfolio():
 
 
 @portfolio_bp.route('', methods=['PUT'])
+@jwt_required
 def update_portfolio():
     try:
-        user_id = session.get('user_id')
-        if not user_id:
-            return jsonify({'detail': 'Not authenticated'}), 401
+        user_id = g.user_id
 
         data = request.get_json()
         if not data:
@@ -98,11 +96,10 @@ def update_portfolio():
 
 
 @portfolio_bp.route('/trim', methods=['PUT'])
+@jwt_required
 def update_portfolio_trim():
     try:
-        user_id = session.get('user_id')
-        if not user_id:
-            return jsonify({'detail': 'Not authenticated'}), 401
+        user_id = g.user_id
 
         data = request.get_json()
         if not data or 'luxury_pct' not in data or 'nonmand_pct' not in data:
@@ -140,11 +137,10 @@ def update_portfolio_trim():
 
 
 @portfolio_bp.route('/history', methods=['GET'])
+@jwt_required
 def get_portfolio_history():
     try:
-        user_id = session.get('user_id')
-        if not user_id:
-            return jsonify({'detail': 'Not authenticated'}), 401
+        user_id = g.user_id
 
         summaries = Summary.query.filter_by(user_id=user_id).order_by(Summary.year.desc(), Summary.month.desc()).all()
         return jsonify([s.to_dict() for s in summaries]), 200
@@ -154,11 +150,10 @@ def get_portfolio_history():
 
 
 @portfolio_bp.route('/history/<month>/<year>', methods=['GET'])
+@jwt_required
 def get_monthly_details(month, year):
     try:
-        user_id = session.get('user_id')
-        if not user_id:
-            return jsonify({'detail': 'Not authenticated'}), 401
+        user_id = g.user_id
 
         try:
             month_num = list(calendar.month_name).index(month)

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify, g
 from datetime import datetime
 import pandas as pd
 
@@ -6,14 +6,14 @@ upload_bp = Blueprint('upload', __name__, url_prefix='/api')
 
 from models import db, Transaction, TransactionType, TransactionCategory, Summary
 from services.transaction_service import categorize_transaction
+from decorators import jwt_required
 
 
 @upload_bp.route('/upload-excel', methods=['POST'])
+@jwt_required
 def upload_excel():
     try:
-        user_id = session.get('user_id')
-        if not user_id:
-            return jsonify({'detail': 'Not authenticated'}), 401
+        user_id = g.user_id
 
         if 'file' not in request.files:
             return jsonify({'detail': 'No file uploaded'}), 400

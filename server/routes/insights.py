@@ -1,16 +1,30 @@
-from flask import Blueprint, jsonify, session
+from flask import Blueprint, jsonify, g
 import json
 from groq import Groq
 import os
 
+from decorators import jwt_required
+
 insights_bp = Blueprint('insights', __name__, url_prefix='/api')
+
+# Lazy Groq client
+_groq_client = None
+
+def _get_groq_client():
+    global _groq_client
+    if _groq_client is None:
+        api_key = os.getenv("GROQ_API_KEY")
+        if not api_key:
+            raise ValueError("GROQ_API_KEY must be set in environment")
+        _groq_client = Groq(api_key=api_key)
+    return _groq_client
+
 
 
 @insights_bp.route('/dashboard/insights', methods=['GET'])
+@jwt_required
 def get_dashboard_insights():
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Authentication required'}), 401
+    user_id = g.user_id
 
     try:
         from models import Summary, Portfolio
@@ -27,7 +41,7 @@ def get_dashboard_insights():
         risk_category = portfolio.category if portfolio else "Moderate"
         chosen_assets = portfolio.chosen_assets if portfolio and portfolio.chosen_assets else "Savings, FD"
 
-        groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+        groq_client = _get_groq_client()
 
         prompt = f"""
 User Financial Profile for {month}:
@@ -78,10 +92,9 @@ Output ONLY JSON array with keys: "type" (saving/alert/goal), "text" (max 12 wor
 
 
 @insights_bp.route('/knowledge/learning-plan', methods=['GET'])
+@jwt_required
 def get_learning_plan():
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Authentication required'}), 401
+    user_id = g.user_id
 
     try:
         from models import Portfolio
@@ -92,7 +105,7 @@ def get_learning_plan():
         chosen_assets = portfolio.chosen_assets if portfolio and portfolio.chosen_assets else ["Savings", "Mutual Funds", "FD"]
         surplus = portfolio.surplus if portfolio else 5000
 
-        groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+        groq_client = _get_groq_client()
 
         prompt = f"""
         CONTEXT SYSTEM:

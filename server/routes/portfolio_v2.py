@@ -3,7 +3,7 @@ Portfolio API Routes
 Handles sample portfolios, personalized portfolios, and growth calculations
 """
 
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify, g
 import os
 from groq import Groq
 
@@ -21,6 +21,7 @@ from services.portfolio_agent import (
     get_yearly_projections
 )
 from models import db, User, RiskProfile, Portfolio, Summary
+from decorators import jwt_required
 
 portfolio_bp = Blueprint('portfolio_v2', __name__, url_prefix='/api/portfolio')
 
@@ -64,11 +65,10 @@ def get_user_profile(user_id):
 
 
 @portfolio_bp.route('/samples', methods=['GET'])
+@jwt_required
 def get_all_samples():
     """Get all sample portfolios"""
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
+    user_id = g.user_id
     
     try:
         user_profile = get_user_profile(user_id)
@@ -107,11 +107,10 @@ def get_all_samples():
 
 
 @portfolio_bp.route('/sample/<slug>', methods=['GET'])
+@jwt_required
 def get_sample(slug):
     """Get a specific sample portfolio"""
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
+    user_id = g.user_id
     
     try:
         portfolio = get_sample_portfolio(slug)
@@ -148,11 +147,10 @@ def get_sample(slug):
 
 
 @portfolio_bp.route('/personalize', methods=['POST'])
+@jwt_required
 def get_personalized():
     """Generate personalized portfolio for user"""
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
+    user_id = g.user_id
     
     try:
         user_profile = get_user_profile(user_id)
@@ -182,11 +180,10 @@ def get_personalized():
 
 
 @portfolio_bp.route('/growth', methods=['GET'])
+@jwt_required
 def get_growth():
     """Calculate growth trajectory"""
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
+    user_id = g.user_id
     
     try:
         monthly = request.args.get('monthly', type=int, default=5000)
@@ -208,11 +205,10 @@ def get_growth():
 
 
 @portfolio_bp.route('/prices', methods=['GET'])
+@jwt_required
 def get_live_prices():
     """Get live prices for common Indian stocks"""
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
+    user_id = g.user_id
     
     try:
         symbols = request.args.get('symbols', 'RELIANCE,HDFCBANK,TCS,INFY,SBIN')
@@ -235,11 +231,10 @@ def get_live_prices():
 
 
 @portfolio_bp.route('/explain/<asset_name>', methods=['GET'])
+@jwt_required
 def explain(asset_name):
     """Explain an asset in simple terms"""
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
+    user_id = g.user_id
     
     try:
         explanation = explain_asset(asset_name, request.args.get('type', 'mutual_fund'))
@@ -250,11 +245,10 @@ def explain(asset_name):
 
 
 @portfolio_bp.route('/save', methods=['POST'])
+@jwt_required
 def save_portfolio():
     """Save selected portfolio for user"""
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
+    user_id = g.user_id
     
     try:
         data = request.get_json()
@@ -306,11 +300,10 @@ def save_portfolio():
 
 
 @portfolio_bp.route('/current', methods=['GET'])
+@jwt_required
 def get_current():
     """Get user's saved portfolio"""
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
+    user_id = g.user_id
     
     try:
         portfolio = Portfolio.query.filter_by(user_id=user_id).order_by(

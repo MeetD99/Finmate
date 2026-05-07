@@ -1,14 +1,15 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify, g
 from services.asset_agent import get_asset_suggestions, get_fallback_suggestions, generate_asset_explanation
+
+from decorators import jwt_required
 
 assets_bp = Blueprint('assets', __name__, url_prefix='/api/assets')
 
 
 @assets_bp.route('/suggestions', methods=['GET'])
+@jwt_required
 def get_suggestions():
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
+    user_id = g.user_id
     
     try:
         category = request.args.get('category', 'Moderate')
@@ -29,10 +30,9 @@ def get_suggestions():
 
 
 @assets_bp.route('/explanation', methods=['GET'])
+@jwt_required
 def get_explanation():
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
+    user_id = g.user_id
     
     try:
         category = request.args.get('category', 'Moderate')

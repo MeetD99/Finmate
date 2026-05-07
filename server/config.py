@@ -29,6 +29,23 @@ class Config:
     SQLALCHEMY_DATABASE_URI = get_database_uri()
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
+    # JWT Settings
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY') or SECRET_KEY
+    JWT_ACCESS_TOKEN_EXPIRES = int(os.environ.get('JWT_ACCESS_TOKEN_EXPIRES', 900))
+    JWT_REFRESH_TOKEN_EXPIRES = int(os.environ.get('JWT_REFRESH_TOKEN_EXPIRES', 604800))
+    JWT_COOKIE_NAME = 'finmate_refresh'
+    
+    # OAuth - Google
+    GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
+    GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
+    GOOGLE_REDIRECT_URI = os.environ.get('GOOGLE_REDIRECT_URI', 'https://finmate-vnfb.onrender.com/api/auth/google/callback')
+    
+    # OAuth - GitHub
+    GITHUB_CLIENT_ID = os.environ.get('GITHUB_CLIENT_ID')
+    GITHUB_CLIENT_SECRET = os.environ.get('GITHUB_CLIENT_SECRET')
+    GITHUB_REDIRECT_URI = os.environ.get('GITHUB_REDIRECT_URI', 'https://finmate-vnfb.onrender.com/api/auth/github/callback')
+    FRONTEND_URL = os.environ.get('FRONTEND_URL', 'https://finmate-sable.vercel.app')
+    
     # Load allowed origins for CORS. If the environment variable is empty or unset,
 # we fall back to the development/default list.
 origins_raw = os.getenv('CORS_ORIGINS')

@@ -2,6 +2,28 @@
 
 A full-stack financial management application with React frontend and Flask backend.
 
+[![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+[![Flask](https://img.shields.io/badge/Flask-000000?logo=flask&logoColor=white)](https://palletsprojects.com/p/flask/)
+[![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)](https://react.dev/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+
+---
+
+## Quick Deploy with Docker
+
+```bash
+# Clone and setup
+cp .env.example .env
+
+# Deploy
+docker-compose up -d
+
+# Verify
+curl http://localhost:8080/api/health
+```
+
+**Full Docker Guide**: [README.Docker.md](README.Docker.md) | [DOCKER_README.md](DOCKER_README.md)
+
 ## Project Structure
 
 ```
@@ -12,21 +34,48 @@ BNP/
 │   │   ├── context/        # React context (auth)
 │   │   ├── pages/          # Page components
 │   │   └── ...
+│   ├── Dockerfile
+│   ├── .dockerignore
 │   ├── package.json
 │   └── ...
-└── server/                 # Flask backend
-    ├── app.py             # Main Flask application
-    ├── config.py          # Configuration settings
-    ├── requirements.txt   # Python dependencies
-    ├── run.py            # Server startup script
-    ├── setup.py          # Setup script
-    ├── test_api.py       # API testing script
-    └── README.md         # Backend documentation
+├── server/                 # Flask backend
+│   ├── Dockerfile
+│   ├── docker-entrypoint.sh
+│   ├── .dockerignore
+│   ├── app.py             # Main Flask application
+│   ├── config.py          # Configuration settings
+│   ├── requirements.txt   # Python dependencies
+│   ├── run.py            # Server startup script
+│   ├── setup.py          # Setup script
+│   ├── test_api.py       # API testing script
+│   └── README.md         # Backend documentation
+├── docker-compose.yml      # Docker orchestration
+├── docker-compose.prod.yml # Production setup
+├── docker-compose.dev.yml  # Development with PG
+├── docker-entrypoint.sh    # Backend entrypoint
+├── .env.example           # Environment template
+├── .env                   # Environment variables
+├── .gitignore
+└── README.md              # This file
 ```
 
 ## Quick Start
 
-### Backend Setup
+### Option 1: Docker (Recommended)
+
+```bash
+# Setup and deploy with one command
+docker-compose up -d
+
+# Verify backend is healthy
+curl http://localhost:8080/api/health
+
+# Access frontend at http://localhost:5173
+```
+
+### Option 2: Local Development
+
+#### Backend Setup
 
 1. **Navigate to server directory:**
    ```bash
@@ -45,7 +94,7 @@ BNP/
 
    The API will be available at `http://localhost:8080`
 
-### Frontend Setup
+#### Frontend Setup
 
 1. **Navigate to client directory:**
    ```bash
@@ -129,6 +178,42 @@ To test the API endpoints:
 cd server
 python test_api.py
 ```
+
+## Container Management with Docker
+
+### Development
+
+```bash
+# Start all services
+docker-compose up -d
+
+# Stop services
+docker-compose down
+
+# View logs
+docker-compose logs -f
+
+# Rebuild after code changes
+docker-compose build --no-cache
+docker-compose up -d
+
+# Access container shell
+docker-compose exec backend sh
+docker-compose exec frontend sh
+```
+
+### Production
+
+```bash
+# Deploy with production settings
+docker-compose -f docker-compose.prod.yml up -d
+
+# Management commands remain the same
+docker-compose -f docker-compose.prod.yml down
+docker-compose -f docker-compose.prod.yml logs
+```
+
+See [README.Docker.md](README.Docker.md) for complete Docker documentation.
 
 ## Development
 
