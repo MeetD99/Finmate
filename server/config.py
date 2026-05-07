@@ -6,7 +6,15 @@ load_dotenv()
 def get_database_uri():
     database_url = os.environ.get('DATABASE_URL')
     if database_url:
+        # Ensure SSL is enforced for remote connections (Supabase)
+        if 'sslmode=' not in database_url:
+            # Append query param correctly (handle existing ? params)
+            if '?' in database_url:
+                database_url += '&sslmode=require'
+            else:
+                database_url += '?sslmode=require'
         return database_url
+
     
     db_host = os.environ.get('DB_HOST', 'localhost')
     db_port = os.environ.get('DB_PORT', '5432')

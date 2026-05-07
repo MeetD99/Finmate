@@ -6,8 +6,19 @@ doten_path = find_dotenv()
 load_dotenv(dotenv_path=doten_path)
 
 # --- Setup -----------------------------------------------------------
-api_key = os.environ["GROQ_API_KEY"]
-client = Groq(api_key=api_key)
+_client = None
+
+
+def _get_groq_client():
+    global _client
+    if _client is None:
+        api_key = os.getenv("GROQ_API_KEY")
+        if not api_key:
+            raise ValueError("GROQ_API_KEY must be set in environment")
+        _client = Groq(api_key=api_key)
+    return _client
+
+
 # ------------------- PHASE 1: FACTOR TABLES -------------------
 
 def get_factor_adjustment(age, income, emi_burden, dependents, emp_type, ef_months, horizon, volatility, growth):
@@ -128,6 +139,7 @@ Now write a concise and user-friendly message explaining:
 Keep tone supportive, practical, and under 120 words.
 """
     try:
+        client = _get_groq_client()
         response = client.chat.completions.create(
             model="meta-llama/llama-4-scout-17b-16e-instruct",
             messages=[
