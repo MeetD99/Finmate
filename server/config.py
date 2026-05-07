@@ -36,7 +36,6 @@ class Config:
         'http://127.0.0.1:3000',
         'https://finmate-vnfb.onrender.com',
         # Allow Railway domain (wildcard for any subdomain)
-        '*'
     ]
 
 class DevelopmentConfig(Config):
