@@ -51,12 +51,15 @@ const Portfolio = () => {
     return () => window.removeEventListener('dataUpdated', handleDataUpdate)
   }, [currentUser])
 
-  const fetchPortfolios = async () => {
-    setIsLoading(true)
-    try {
-      const res = await fetch(`${API_BASE}/portfolio/samples`, {
-        credentials: 'include'
-      })
+   const fetchPortfolios = async () => {
+     setIsLoading(true)
+     try {
+       const token = localStorage.getItem('token');
+       const res = await fetch(`${API_BASE}/portfolio/samples`, {
+         headers: {
+           'Authorization': `Bearer ${token}`
+         }
+       })
       if (res.ok) {
         const data = await res.json()
         setSamplePortfolios(data.samples || [])
@@ -74,11 +77,14 @@ const Portfolio = () => {
     }
   }
 
-  const fetchUserProfile = async () => {
-    try {
-      const res = await fetch(`${API_BASE}/risk-profile`, {
-        credentials: 'include'
-      })
+   const fetchUserProfile = async () => {
+     try {
+       const token = localStorage.getItem('token');
+       const res = await fetch(`${API_BASE}/risk-profile`, {
+         headers: {
+           'Authorization': `Bearer ${token}`
+         }
+       })
       if (res.ok) {
         const data = await res.json()
         setUserRiskProfile(data)
@@ -88,11 +94,14 @@ const Portfolio = () => {
     }
   }
 
-  const fetchLivePrices = async () => {
-    try {
-      const res = await fetch(`${API_BASE}/portfolio/prices?symbols=RELIANCE,HDFCBANK,TCS,INFY,SBIN`, {
-        credentials: 'include'
-      })
+   const fetchLivePrices = async () => {
+     try {
+       const token = localStorage.getItem('token');
+       const res = await fetch(`${API_BASE}/portfolio/prices?symbols=RELIANCE,HDFCBANK,TCS,INFY,SBIN`, {
+         headers: {
+           'Authorization': `Bearer ${token}`
+         }
+       })
       if (res.ok) {
         const data = await res.json()
         setAssetPrices(data.prices || {})
@@ -102,39 +111,45 @@ const Portfolio = () => {
     }
   }
 
-  const selectPortfolio = async (portfolio, type) => {
-    if (type === 'sample') {
-      try {
-        const res = await fetch(`${API_BASE}/portfolio/sample/${portfolio.slug}`, {
-          credentials: 'include'
-        })
-        if (res.ok) {
-          const data = await res.json()
-          setSelectedPortfolio({ ...data, type: 'sample' })
-        }
-      } catch (err) {
-        setSelectedPortfolio({ ...portfolio, type: 'sample' })
-      }
-    } else {
-      setSelectedPortfolio({ ...portfolio, type })
-    }
-    setShowGrowthChart(true)
-  }
+   const selectPortfolio = async (portfolio, type) => {
+     if (type === 'sample') {
+       try {
+         const token = localStorage.getItem('token');
+         const res = await fetch(`${API_BASE}/portfolio/sample/${portfolio.slug}`, {
+           headers: {
+             'Authorization': `Bearer ${token}`
+           }
+         })
+         if (res.ok) {
+           const data = await res.json()
+           setSelectedPortfolio({ ...data, type: 'sample' })
+         }
+       } catch (err) {
+         setSelectedPortfolio({ ...portfolio, type: 'sample' })
+       }
+     } else {
+       setSelectedPortfolio({ ...portfolio, type })
+     }
+     setShowGrowthChart(true)
+   }
 
   const generatePersonalPortfolio = async () => {
     setIsGenerating(true)
     showLoading('Generating your portfolio...')
     
     try {
-      const res = await fetch(`${API_BASE}/portfolio/personalize`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          monthly_investment: userSurplus,
-          risk_category: selectedPortfolio?.risk_category || 'Moderate'
-        })
-      })
+       const token = localStorage.getItem('token');
+       const res = await fetch(`${API_BASE}/portfolio/personalize`, {
+         method: 'POST',
+         headers: { 
+           'Content-Type': 'application/json',
+           'Authorization': `Bearer ${token}`
+         },
+         body: JSON.stringify({
+           monthly_investment: userSurplus,
+           risk_category: selectedPortfolio?.risk_category || 'Moderate'
+         })
+       })
       
       if (res.ok) {
         const data = await res.json()
@@ -152,24 +167,27 @@ const Portfolio = () => {
     }
   }
 
-  const applyPortfolio = async () => {
-    if (!selectedPortfolio) return
-    setIsSaving(true)
-    
-    try {
-      const res = await fetch(`${API_BASE}/portfolio/save`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          type: selectedPortfolio.type,
-          slug: selectedPortfolio.slug || 'custom',
-          assets: selectedPortfolio.assets,
-          allocation: selectedPortfolio.allocation,
-          monthly_investment: selectedPortfolio.monthly_investment || userSurplus,
-          expected_return: selectedPortfolio.expected_return
-        })
-      })
+   const applyPortfolio = async () => {
+     if (!selectedPortfolio) return
+     setIsSaving(true)
+     
+     try {
+       const token = localStorage.getItem('token');
+       const res = await fetch(`${API_BASE}/portfolio/save`, {
+         method: 'POST',
+         headers: { 
+           'Content-Type': 'application/json',
+           'Authorization': `Bearer ${token}`
+         },
+         body: JSON.stringify({
+           type: selectedPortfolio.type,
+           slug: selectedPortfolio.slug || 'custom',
+           assets: selectedPortfolio.assets,
+           allocation: selectedPortfolio.allocation,
+           monthly_investment: selectedPortfolio.monthly_investment || userSurplus,
+           expected_return: selectedPortfolio.expected_return
+         })
+       })
       
       if (res.ok) {
         showSuccess('Portfolio saved successfully!')

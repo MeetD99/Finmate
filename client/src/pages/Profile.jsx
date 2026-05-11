@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from '../context/authContext';
 
 const Profile = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { currentUser } = useContext(AuthContext);
+  const [user, setUser] = useState(currentUser || null);
+  const [loading, setLoading] = useState(!Boolean(currentUser));
   const [message, setMessage] = useState({ type: "", text: "" });
 
   const [formData, setFormData] = useState({
@@ -18,28 +21,15 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    fetchUser();
-  }, []);
-
-  const fetchUser = async () => {
-    try {
-      const response = await fetch("https://finmate-vnfb.onrender.com/api/auth/me", {
-        credentials: "include",
+    if (currentUser) {
+      setUser(currentUser);
+      setFormData({
+        name: currentUser.name || "",
+        email: currentUser.email || "",
       });
-      if (response.ok) {
-        const userData = await response.json();
-        setUser(userData);
-        setFormData({
-          name: userData.name || "",
-          email: userData.email || "",
-        });
-      }
-    } catch (err) {
-      console.error("Error fetching user:", err);
-    } finally {
       setLoading(false);
     }
-  };
+  }, [currentUser]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -57,10 +47,13 @@ const Profile = () => {
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch("https://finmate-vnfb.onrender.com/api/auth/profile", {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify(formData),
       });
 
@@ -89,10 +82,13 @@ const Profile = () => {
     }
 
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch("https://finmate-vnfb.onrender.com/api/auth/password", {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({ new_password: passwordData.new_password }),
       });
 

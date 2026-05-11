@@ -1,10 +1,11 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify, current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 import re
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')
 
 from models import db, User
+from utils.auth_utils import generate_token, token_required
 
 
 def is_valid_email(email):
@@ -81,10 +82,14 @@ def login():
         if not user or not check_password_hash(user.password_hash, password):
             return jsonify({'detail': 'Invalid email or password'}), 401
 
-        session['user_id'] = user.id
-        session['user_email'] = user.email
-
-        return jsonify(user.to_dict(include_risk_profile_status=True)), 200
+        # Generate JWT token
+        token = generate_token(user.id)
+        
+        # Return user info and token
+        user_data = user.to_dict(include_risk_profile_status=True)
+        user_data['token'] = token
+        
+        return jsonify(user_data), 200
 
     except Exception as e:
         print(f"Login error: {e}")
@@ -95,35 +100,25 @@ def login():
 
 @auth_bp.route('/logout', methods=['POST'])
 def logout():
-    try:
-        session.clear()
-        response = jsonify({'message': 'Logged out successfully'})
-        response.set_cookie('session', '', expires=0, path='/', samesite='Lax', secure=False)
-        return response, 200
-    except Exception as e:
-        return jsonify({'detail': 'Logout failed'}), 500
+    # With JWT, logout is handled client-side by removing the token
+    # No server-side action needed for stateless tokens
+    return jsonify({'message': 'Logged out successfully'}), 200
 
 
 @auth_bp.route('/me', methods=['GET'])
-def get_current_user():
+@token_required
+def get_current_user(current_user):
     try:
-        user_id = session.get('user_id')
-        if not user_id:
-            return jsonify({'detail': 'Not authenticated'}), 401
-
-        user = User.query.get(user_id)
-        if not user:
-            return jsonify({'detail': 'User not found'}), 404
-
-        return jsonify(user.to_dict(include_risk_profile_status=True)), 200
+        return jsonify(current_user.to_dict(include_risk_profile_status=True)), 200
     except Exception as e:
         return jsonify({'detail': 'Failed to get user info'}), 500
 
 
 @auth_bp.route('/profile', methods=['PUT'])
-def update_profile():
+@token_required
+def update_profile(current_user):
     try:
-        user_id = session.get('user_id')
+        user_id = current_user.id
         if not user_id:
             return jsonify({'detail': 'Not authenticated'}), 401
 
@@ -149,7 +144,6 @@ def update_profile():
             if existing and existing.id != user_id:
                 return jsonify({'detail': 'Email already in use'}), 400
             user.email = email
-            session['user_email'] = email
 
         db.session.commit()
         return jsonify(user.to_dict(include_risk_profile_status=True)), 200
@@ -160,9 +154,10 @@ def update_profile():
 
 
 @auth_bp.route('/password', methods=['PUT'])
-def update_password():
+@token_required
+def update_password(current_user):
     try:
-        user_id = session.get('user_id')
+        user_id = current_user.id
         if not user_id:
             return jsonify({'detail': 'Not authenticated'}), 401
 

@@ -1,23 +1,21 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify
 from datetime import datetime
 from collections import defaultdict
 
 expenses_bp = Blueprint('expenses', __name__, url_prefix='/api/expenses')
 
 from models import db, Expense
-
-
-def get_user_id():
-    user_id = session.get('user_id')
-    if not user_id:
-        user_id = request.args.get('user_id', type=int)
-    return user_id
+from utils.auth_utils import token_required
 
 
 @expenses_bp.route('', methods=['POST'])
-def create_expense():
+@token_required
+def create_expense(current_user):
     try:
-        user_id = get_user_id()
+        user_id = current_user.id
+        if not user_id:
+            return jsonify({'detail': 'Not authenticated'}), 401
+
         data = request.get_json()
         required_fields = ['amount', 'description', 'type', 'date']
 
@@ -33,7 +31,7 @@ def create_expense():
             return jsonify({'detail': 'Invalid date format. Use YYYY-MM-DD'}), 400
 
         new_expense = Expense(
-            user_id=user_id or 0,
+            user_id=user_id,
             amount=data['amount'],
             description=data['description'],
             type=data['type'],
@@ -51,11 +49,12 @@ def create_expense():
 
 
 @expenses_bp.route('', methods=['GET'])
-def get_expenses():
+@token_required
+def get_expenses(current_user):
     try:
-        user_id = get_user_id()
+        user_id = current_user.id
         if not user_id:
-            return jsonify({'detail': 'User ID required. Provide user_id parameter or login.'}), 400
+            return jsonify({'detail': 'Not authenticated'}), 401
 
         expenses = Expense.query.filter_by(user_id=user_id).order_by(Expense.date.desc()).all()
         return jsonify([e.to_dict() for e in expenses]), 200
@@ -65,14 +64,14 @@ def get_expenses():
 
 
 @expenses_bp.route('/grouped', methods=['GET'])
-def get_expenses_grouped():
+@token_required
+def get_expenses_grouped(current_user):
     try:
-        user_id = get_user_id()
+        user_id = current_user.id
         if not user_id:
-            return jsonify({'detail': 'User ID required. Provide user_id parameter or login.'}), 400
+            return jsonify({'detail': 'Not authenticated'}), 401
 
         expenses = Expense.query.filter_by(user_id=user_id).order_by(Expense.date.desc()).all()
-
         grouped = defaultdict(list)
         for expense in expenses:
             date_str = expense.date.isoformat()
@@ -94,11 +93,12 @@ def get_expenses_grouped():
 
 
 @expenses_bp.route('/<int:expense_id>', methods=['PUT'])
-def update_expense(expense_id):
+@token_required
+def update_expense(current_user, expense_id):
     try:
-        user_id = get_user_id()
+        user_id = current_user.id
         if not user_id:
-            return jsonify({'detail': 'User ID required'}), 400
+            return jsonify({'detail': 'Not authenticated'}), 401
 
         expense = Expense.query.filter_by(id=expense_id, user_id=user_id).first()
         if not expense:
@@ -129,11 +129,12 @@ def update_expense(expense_id):
 
 
 @expenses_bp.route('/<int:expense_id>', methods=['DELETE'])
-def delete_expense(expense_id):
+@token_required
+def delete_expense(current_user, expense_id):
     try:
-        user_id = get_user_id()
+        user_id = current_user.id
         if not user_id:
-            return jsonify({'detail': 'User ID required'}), 400
+            return jsonify({'detail': 'Not authenticated'}), 401
 
         expense = Expense.query.filter_by(id=expense_id, user_id=user_id).first()
         if not expense:
@@ -149,11 +150,12 @@ def delete_expense(expense_id):
 
 
 @expenses_bp.route('/import-to-transactions', methods=['POST'])
-def import_to_transactions():
+@token_required
+def import_to_transactions(current_user):
     try:
-        user_id = session.get('user_id')
+        user_id = current_user.id
         if not user_id:
-            return jsonify({'detail': 'Not authenticated. Login required to import.'}), 401
+            return jsonify({'detail': 'Not authenticated'}), 401
 
         from models import Transaction, TransactionType, TransactionCategory, Summary
         from services.transaction_service import categorize_transaction

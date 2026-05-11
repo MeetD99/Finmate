@@ -24,13 +24,16 @@ const InvestmentKnowledgeCenter = () => {
   const [isLoadingPlan, setIsLoadingPlan] = React.useState(true);
   const [selectedStep, setSelectedStep] = React.useState(null);
 
-  const fetchLearningPlan = React.useCallback(async () => {
-    try {
-      setIsLoadingPlan(true);
-      const response = await fetch('https://finmate-vnfb.onrender.com/api/knowledge/learning-plan', {
-        method: 'GET',
-        credentials: 'include'
-      });
+   const fetchLearningPlan = React.useCallback(async () => {
+     try {
+       setIsLoadingPlan(true);
+       const token = localStorage.getItem('token');
+       const response = await fetch('https://finmate-vnfb.onrender.com/api/knowledge/learning-plan', {
+         method: 'GET',
+         headers: {
+           'Authorization': `Bearer ${token}`
+         }
+       });
       if (response.ok) {
         const data = await response.json();
         if (Array.isArray(data) && data.length > 0) {

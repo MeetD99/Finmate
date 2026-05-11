@@ -20,11 +20,14 @@ const RiskAppetite = () => {
     fetchExistingProfile();
   }, []);
 
-  const fetchExistingProfile = async () => {
-    try {
-      const response = await fetch("https://finmate-vnfb.onrender.com/api/risk-profile", {
-        credentials: "include",
-      });
+   const fetchExistingProfile = async () => {
+     try {
+       const token = localStorage.getItem('token');
+       const response = await fetch("https://finmate-vnfb.onrender.com/api/risk-profile", {
+         headers: {
+           'Authorization': `Bearer ${token}`
+         },
+       });
       if (response.ok) {
         const data = await response.json();
         if (data.age) {
@@ -54,14 +57,15 @@ const RiskAppetite = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://finmate-vnfb.onrender.com/api/risk-appetite/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(formData)
-      });
+       const token = localStorage.getItem('token');
+       const response = await fetch('https://finmate-vnfb.onrender.com/api/risk-appetite/submit', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+           'Authorization': `Bearer ${token}`
+         },
+         body: JSON.stringify(formData)
+       });
 
       if (response.ok) {
         const result = await response.json();

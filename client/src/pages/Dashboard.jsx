@@ -135,11 +135,14 @@ const Dashboard = () => {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('https://finmate-vnfb.onrender.com/api/upload-excel', {
-        method: 'POST',
-        body: formData,
-        credentials: 'include' // Include cookies for authentication
-      });
+        const token = localStorage.getItem('token');
+        const response = await fetch('https://finmate-vnfb.onrender.com/api/upload-excel', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+         body: formData
+        });
 
       const result = await response.json();
 
@@ -233,14 +236,17 @@ const Dashboard = () => {
     }
   }, [hasRiskProfile]);
 
-  // Fetch chart data from API
-  const fetchChartData = async () => {
-    setIsLoadingChart(true);
-    try {
-      const response = await fetch('https://finmate-vnfb.onrender.com/api/summary/chart-data', {
-        method: 'GET',
-        credentials: 'include' // Include cookies for authentication
-      });
+   // Fetch chart data from API
+   const fetchChartData = async () => {
+     setIsLoadingChart(true);
+     try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('https://finmate-vnfb.onrender.com/api/summary/chart-data', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
 
       if (response.ok) {
         const data = await response.json();
@@ -259,13 +265,16 @@ const Dashboard = () => {
     }
   };
 
-  // Refresh user data to get updated risk profile status
-  const refreshUserData = async () => {
-    try {
-      const response = await fetch('https://finmate-vnfb.onrender.com/api/auth/me', {
-        method: 'GET',
-        credentials: 'include'
-      });
+   // Refresh user data to get updated risk profile status
+   const refreshUserData = async () => {
+     try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('https://finmate-vnfb.onrender.com/api/auth/me', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
 
       if (response.ok) {
         const userData = await response.json();
@@ -276,12 +285,15 @@ const Dashboard = () => {
     }
   };
 
-  const fetchDbTransactions = async () => {
-    try {
-      const response = await fetch('https://finmate-vnfb.onrender.com/api/transactions', {
-        method: 'GET',
-        credentials: 'include'
-      });
+   const fetchDbTransactions = async () => {
+     try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('https://finmate-vnfb.onrender.com/api/transactions', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
       if (response.ok) {
         const data = await response.json();
         setDbTransactions(data);
@@ -291,19 +303,22 @@ const Dashboard = () => {
     }
   };
 
-  const openImportModal = async () => {
-    setShowImportModal(true)
-    setIsLoadingExpenses(true)
-    setSelectedImportIds([])
-    try {
-      const userId = currentUser?.id
-      const url = userId 
-        ? `https://finmate-vnfb.onrender.com/api/expenses/grouped?user_id=${userId}`
-        : `https://finmate-vnfb.onrender.com/api/expenses/grouped?user_id=0`
-      const response = await fetch(url, {
-        method: 'GET',
-        credentials: 'include'
-      })
+   const openImportModal = async () => {
+     setShowImportModal(true)
+     setIsLoadingExpenses(true)
+     setSelectedImportIds([])
+     try {
+       const userId = currentUser?.id
+       const url = userId 
+         ? `https://finmate-vnfb.onrender.com/api/expenses/grouped?user_id=${userId}`
+         : `https://finmate-vnfb.onrender.com/api/expenses/grouped?user_id=0`
+       const token = localStorage.getItem('token');
+       const response = await fetch(url, {
+         method: 'GET',
+         headers: {
+           'Authorization': `Bearer ${token}`
+         }
+       })
       if (response.ok) {
         const data = await response.json()
         setExpenseTrackerExpenses(data)
@@ -319,12 +334,15 @@ const Dashboard = () => {
     if (selectedImportIds.length === 0) return
     setIsLoadingExpenses(true)
     try {
-      const response = await fetch('https://finmate-vnfb.onrender.com/api/expenses/import-to-transactions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ expense_ids: selectedImportIds })
-      })
+        const token = localStorage.getItem('token');
+        const response = await fetch('https://finmate-vnfb.onrender.com/api/expenses/import-to-transactions', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ expense_ids: selectedImportIds })
+        })
       if (response.ok) {
         const data = await response.json()
         showTooltipPopup(data.message)
@@ -416,12 +434,15 @@ const Dashboard = () => {
     )
   }
 
-  const fetchPortfolioData = async () => {
-    try {
-      const response = await fetch('https://finmate-vnfb.onrender.com/api/portfolio', {
-        method: 'GET',
-        credentials: 'include'
-      });
+   const fetchPortfolioData = async () => {
+     try {
+       const token = localStorage.getItem('token');
+       const response = await fetch('https://finmate-vnfb.onrender.com/api/portfolio', {
+         method: 'GET',
+         headers: {
+           'Authorization': `Bearer ${token}`
+         }
+        });
       const data = await response.json();
 
       if (response.ok && data.surplus !== undefined) {
@@ -443,20 +464,21 @@ const Dashboard = () => {
     }
   };
 
-  const handleSaveTrim = async () => {
-    setIsSavingTrim(true);
-    try {
-      const response = await fetch('https://finmate-vnfb.onrender.com/api/portfolio/trim', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          luxury_pct: luxury,
-          nonmand_pct: nonMandatory,
-        })
-      });
+   const handleSaveTrim = async () => {
+     setIsSavingTrim(true);
+     try {
+       const token = localStorage.getItem('token');
+       const response = await fetch('https://finmate-vnfb.onrender.com/api/portfolio/trim', {
+         method: 'PUT',
+         headers: {
+           'Content-Type': 'application/json',
+           'Authorization': `Bearer ${token}`
+         },
+         body: JSON.stringify({
+           luxury_pct: luxury,
+           nonmand_pct: nonMandatory,
+         })
+       });
 
       if (response.ok) {
         const data = await response.json();
@@ -579,13 +601,16 @@ const Dashboard = () => {
     }
   };
 
-  const fetchHistoryList = async () => {
-    try {
-      setIsLoadingHistory(true);
-      const response = await fetch('https://finmate-vnfb.onrender.com/api/portfolio/history', {
-        method: 'GET',
-        credentials: 'include'
-      });
+   const fetchHistoryList = async () => {
+     try {
+       setIsLoadingHistory(true);
+       const token = localStorage.getItem('token');
+       const response = await fetch('https://finmate-vnfb.onrender.com/api/portfolio/history', {
+         method: 'GET',
+         headers: {
+           'Authorization': `Bearer ${token}`
+         }
+       });
       if (response.ok) {
         const data = await response.json();
         setHistoryList(data);
@@ -600,10 +625,13 @@ const Dashboard = () => {
   const handleLoadHistoricalData = async (month, year) => {
     try {
       setIsLoadingChart(true);
-      const response = await fetch(`https://finmate-vnfb.onrender.com/api/portfolio/history/${month}/${year}`, {
-        method: 'GET',
-        credentials: 'include'
-      });
+       const token = localStorage.getItem('token');
+       const response = await fetch(`https://finmate-vnfb.onrender.com/api/portfolio/history/${month}/${year}`, {
+         method: 'GET',
+         headers: {
+           'Authorization': `Bearer ${token}`
+         }
+       });
 
       if (response.ok) {
         const data = await response.json();

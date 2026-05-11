@@ -1,16 +1,18 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify
 from sqlalchemy import extract
 import calendar
 
 summary_bp = Blueprint('summary', __name__, url_prefix='/api/summary')
 
 from models import db, Summary
+from utils.auth_utils import token_required
 
 
 @summary_bp.route('', methods=['POST'])
-def create_summary():
+@token_required
+def create_summary(current_user):
     try:
-        user_id = session.get('user_id')
+        user_id = current_user.id
         if not user_id:
             return jsonify({'detail': 'Not authenticated'}), 401
 
@@ -48,9 +50,10 @@ def create_summary():
 
 
 @summary_bp.route('', methods=['GET'])
-def get_summaries():
+@token_required
+def get_summaries(current_user):
     try:
-        user_id = session.get('user_id')
+        user_id = current_user.id
         if not user_id:
             return jsonify({'detail': 'Not authenticated'}), 401
 
@@ -62,9 +65,10 @@ def get_summaries():
 
 
 @summary_bp.route('/chart-data', methods=['GET'])
-def get_chart_data():
+@token_required
+def get_chart_data(current_user):
     try:
-        user_id = session.get('user_id')
+        user_id = current_user.id
         if not user_id:
             return jsonify({'detail': 'Not authenticated'}), 401
 

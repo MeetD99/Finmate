@@ -1,16 +1,18 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify
 
 risk_bp = Blueprint('risk', __name__, url_prefix='/api')
 
 from models import db, RiskProfile, Transaction, TransactionType, TransactionCategory
 from services.risk_service import calculate_risk, submit_risk_appetite
 from services.trim_service import run_pipeline, get_factor_adjustment, compute_trim
+from utils.auth_utils import token_required
 
 
 @risk_bp.route('/risk-profile', methods=['POST'])
-def create_risk_profile():
+@token_required
+def create_risk_profile(current_user):
     try:
-        user_id = session.get('user_id')
+        user_id = current_user.id
         if not user_id:
             return jsonify({'detail': 'Not authenticated'}), 401
 
@@ -46,9 +48,10 @@ def create_risk_profile():
 
 
 @risk_bp.route('/risk-profile', methods=['GET'])
-def get_risk_profile():
+@token_required
+def get_risk_profile(current_user):
     try:
-        user_id = session.get('user_id')
+        user_id = current_user.id
         if not user_id:
             return jsonify({'detail': 'Not authenticated'}), 401
 
@@ -63,9 +66,10 @@ def get_risk_profile():
 
 
 @risk_bp.route('/risk-appetite/submit', methods=['POST'])
-def submit_risk_appetite_route():
+@token_required
+def submit_risk_appetite_route(current_user):
     try:
-        user_id = session.get('user_id')
+        user_id = current_user.id
         if not user_id:
             return jsonify({'detail': 'Not authenticated'}), 401
 

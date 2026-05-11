@@ -2,10 +2,13 @@ export const API_BASE = 'https://finmate-vnfb.onrender.com/api';
 
 export const chatService = {
   async sendMessage(query) {
+    const token = localStorage.getItem('token');
     const response = await fetch(`${API_BASE}/chat/query`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
       body: JSON.stringify({ query })
     });
     
@@ -17,9 +20,12 @@ export const chatService = {
   },
   
   async getHistory(limit = 20) {
+    const token = localStorage.getItem('token');
     const response = await fetch(`${API_BASE}/chat/history?limit=${limit}`, {
       method: 'GET',
-      credentials: 'include'
+      headers: { 
+        'Authorization': `Bearer ${token}`
+      }
     });
     
     if (!response.ok) {
@@ -30,9 +36,12 @@ export const chatService = {
   },
   
   async clearHistory() {
+    const token = localStorage.getItem('token');
     const response = await fetch(`${API_BASE}/chat/clear`, {
       method: 'POST',
-      credentials: 'include'
+      headers: { 
+        'Authorization': `Bearer ${token}`
+      }
     });
     
     if (!response.ok) {

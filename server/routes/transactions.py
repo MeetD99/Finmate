@@ -1,15 +1,17 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify
 from datetime import datetime
 
 transactions_bp = Blueprint('transactions', __name__, url_prefix='/api/transactions')
 
 from models import db, Transaction, TransactionType, TransactionCategory
+from utils.auth_utils import token_required
 
 
 @transactions_bp.route('', methods=['POST'])
-def create_transaction():
+@token_required
+def create_transaction(current_user):
     try:
-        user_id = session.get('user_id')
+        user_id = current_user.id
         if not user_id:
             return jsonify({'detail': 'Not authenticated'}), 401
 
@@ -47,9 +49,10 @@ def create_transaction():
 
 
 @transactions_bp.route('', methods=['GET'])
-def get_transactions():
+@token_required
+def get_transactions(current_user):
     try:
-        user_id = session.get('user_id')
+        user_id = current_user.id
         if not user_id:
             return jsonify({'detail': 'Not authenticated'}), 401
 

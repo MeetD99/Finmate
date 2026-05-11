@@ -46,13 +46,16 @@ const ExpenseTracker = () => {
     fetchGroupedExpenses()
   }, [currentUser])
 
-  const fetchExpenses = async () => {
-    try {
-      const url = `https://finmate-vnfb.onrender.com/api/expenses?user_id=${userId}`
-      const response = await fetch(url, {
-        method: 'GET',
-        credentials: 'include'
-      })
+   const fetchExpenses = async () => {
+     try {
+       const url = `https://finmate-vnfb.onrender.com/api/expenses?user_id=${userId}`
+       const token = localStorage.getItem('token');
+       const response = await fetch(url, {
+         method: 'GET',
+         headers: {
+           'Authorization': `Bearer ${token}`
+         }
+       })
       if (response.ok) {
         const data = await response.json()
         setExpenses(data)
@@ -64,13 +67,16 @@ const ExpenseTracker = () => {
     }
   }
 
-  const fetchGroupedExpenses = async () => {
-    try {
-      const url = `https://finmate-vnfb.onrender.com/api/expenses/grouped?user_id=${userId}`
-      const response = await fetch(url, {
-        method: 'GET',
-        credentials: 'include'
-      })
+   const fetchGroupedExpenses = async () => {
+     try {
+       const url = `https://finmate-vnfb.onrender.com/api/expenses/grouped?user_id=${userId}`
+       const token = localStorage.getItem('token');
+       const response = await fetch(url, {
+         method: 'GET',
+         headers: {
+           'Authorization': `Bearer ${token}`
+         }
+       })
       if (response.ok) {
         const data = await response.json()
         setGroupedExpenses(data)
@@ -108,12 +114,15 @@ const ExpenseTracker = () => {
 
     try {
       const payload = { ...formData, user_id: userId }
-      const response = await fetch('https://finmate-vnfb.onrender.com/api/expenses', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(payload)
-      })
+       const token = localStorage.getItem('token');
+       const response = await fetch('https://finmate-vnfb.onrender.com/api/expenses', {
+         method: 'POST',
+         headers: { 
+           'Content-Type': 'application/json',
+           'Authorization': `Bearer ${token}`
+         },
+         body: JSON.stringify(payload)
+       })
 
       if (response.ok) {
         showSuccess('Expense added successfully!')
@@ -144,12 +153,15 @@ const ExpenseTracker = () => {
 
     try {
       const payload = { ...formData, user_id: userId }
-      const response = await fetch(`https://finmate-vnfb.onrender.com/api/expenses/${editingExpense.id}?user_id=${userId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(payload)
-      })
+       const token = localStorage.getItem('token');
+       const response = await fetch(`https://finmate-vnfb.onrender.com/api/expenses/${editingExpense.id}?user_id=${userId}`, {
+         method: 'PUT',
+         headers: { 
+           'Content-Type': 'application/json',
+           'Authorization': `Bearer ${token}`
+         },
+         body: JSON.stringify(payload)
+       })
 
       if (response.ok) {
         showSuccess('Expense updated successfully!')
@@ -174,13 +186,16 @@ const ExpenseTracker = () => {
     }
   }
 
-  const handleDelete = async (id) => {
-    try {
-      const url = `https://finmate-vnfb.onrender.com/api/expenses/${id}?user_id=${userId}`
-      const response = await fetch(url, {
-        method: 'DELETE',
-        credentials: 'include'
-      })
+   const handleDelete = async (id) => {
+     try {
+       const url = `https://finmate-vnfb.onrender.com/api/expenses/${id}?user_id=${userId}`
+       const token = localStorage.getItem('token');
+       const response = await fetch(url, {
+         method: 'DELETE',
+         headers: {
+           'Authorization': `Bearer ${token}`
+         }
+       })
       if (response.ok) {
         showSuccess('Expense deleted!')
         fetchExpenses()
@@ -199,12 +214,15 @@ const ExpenseTracker = () => {
     if (selectedExpenses.length === 0) return
     
     try {
-      const deletePromises = selectedExpenses.map(id => 
-        fetch(`https://finmate-vnfb.onrender.com/api/expenses/${id}?user_id=${userId}`, {
-          method: 'DELETE',
-          credentials: 'include'
-        })
-      )
+       const token = localStorage.getItem('token');
+       const deletePromises = selectedExpenses.map(id => 
+         fetch(`https://finmate-vnfb.onrender.com/api/expenses/${id}?user_id=${userId}`, {
+           method: 'DELETE',
+           headers: {
+             'Authorization': `Bearer ${token}`
+           }
+         })
+       )
       
       await Promise.all(deletePromises)
       showSuccess(`${selectedExpenses.length} expenses deleted!`)
