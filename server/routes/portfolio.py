@@ -1,19 +1,17 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify
 import calendar
 from sqlalchemy import extract
 
 portfolio_bp = Blueprint('portfolio', __name__, url_prefix='/api/portfolio')
 
 from models import db, Portfolio, Summary, Transaction
+from utils.auth_utils import token_required
 
 
 @portfolio_bp.route('', methods=['POST'])
-def create_portfolio():
+@token_required
+def create_portfolio(current_user):
     try:
-        user_id = session.get('user_id')
-        if not user_id:
-            return jsonify({'detail': 'Not authenticated'}), 401
-
         data = request.get_json()
         required_fields = ['surplus', 'luxury', 'total', 'non_mandatory', 'high', 'mid', 'low', 'l_trim', 'n_trim']
 
@@ -21,7 +19,7 @@ def create_portfolio():
             return jsonify({'detail': 'Missing required fields'}), 400
 
         new_portfolio = Portfolio(
-            user_id=user_id,
+            user_id=current_user.id,
             surplus=data['surplus'],
             luxury=data['luxury'],
             total=data['total'],
@@ -44,13 +42,10 @@ def create_portfolio():
 
 
 @portfolio_bp.route('', methods=['GET'])
-def get_portfolio():
+@token_required
+def get_portfolio(current_user):
     try:
-        user_id = session.get('user_id')
-        if not user_id:
-            return jsonify({'detail': 'Not authenticated'}), 401
-
-        portfolio = Portfolio.query.filter_by(user_id=user_id).first()
+        portfolio = Portfolio.query.filter_by(user_id=current_user.id).first()
         if not portfolio:
             return jsonify({'message': 'No portfolio found', 'portfolio': None}), 200
 
@@ -61,17 +56,14 @@ def get_portfolio():
 
 
 @portfolio_bp.route('', methods=['PUT'])
-def update_portfolio():
+@token_required
+def update_portfolio(current_user):
     try:
-        user_id = session.get('user_id')
-        if not user_id:
-            return jsonify({'detail': 'Not authenticated'}), 401
-
         data = request.get_json()
         if not data:
             return jsonify({'detail': 'No data provided'}), 400
 
-        portfolio = Portfolio.query.filter_by(user_id=user_id).first()
+        portfolio = Portfolio.query.filter_by(user_id=current_user.id).first()
         if not portfolio:
             return jsonify({'detail': 'Portfolio not found'}), 404
 
@@ -98,17 +90,14 @@ def update_portfolio():
 
 
 @portfolio_bp.route('/trim', methods=['PUT'])
-def update_portfolio_trim():
+@token_required
+def update_portfolio_trim(current_user):
     try:
-        user_id = session.get('user_id')
-        if not user_id:
-            return jsonify({'detail': 'Not authenticated'}), 401
-
         data = request.get_json()
         if not data or 'luxury_pct' not in data or 'nonmand_pct' not in data:
             return jsonify({'detail': 'Missing trim percentages'}), 400
 
-        portfolio = Portfolio.query.filter_by(user_id=user_id).first()
+        portfolio = Portfolio.query.filter_by(user_id=current_user.id).first()
         if not portfolio:
             return jsonify({'detail': 'Portfolio not found'}), 404
 
@@ -140,13 +129,10 @@ def update_portfolio_trim():
 
 
 @portfolio_bp.route('/history', methods=['GET'])
-def get_portfolio_history():
+@token_required
+def get_portfolio_history(current_user):
     try:
-        user_id = session.get('user_id')
-        if not user_id:
-            return jsonify({'detail': 'Not authenticated'}), 401
-
-        summaries = Summary.query.filter_by(user_id=user_id).order_by(Summary.year.desc(), Summary.month.desc()).all()
+        summaries = Summary.query.filter_by(user_id=current_user.id).order_by(Summary.year.desc(), Summary.month.desc()).all()
         return jsonify([s.to_dict() for s in summaries]), 200
 
     except Exception as e:
@@ -154,12 +140,9 @@ def get_portfolio_history():
 
 
 @portfolio_bp.route('/history/<month>/<year>', methods=['GET'])
-def get_monthly_details(month, year):
+@token_required
+def get_monthly_details(current_user, month, year):
     try:
-        user_id = session.get('user_id')
-        if not user_id:
-            return jsonify({'detail': 'Not authenticated'}), 401
-
         try:
             month_num = list(calendar.month_name).index(month)
         except ValueError:
@@ -169,13 +152,13 @@ def get_monthly_details(month, year):
                 return jsonify({'detail': 'Invalid month name'}), 400
 
         transactions = Transaction.query.filter(
-            Transaction.user_id == user_id,
+            Transaction.user_id == current_user.id,
             extract('month', Transaction.date) == month_num,
             extract('year', Transaction.date) == int(year)
         ).all()
 
         summary = Summary.query.filter_by(
-            user_id=user_id,
+            user_id=current_user.id,
             month=month,
             year=year
         ).first()

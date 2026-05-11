@@ -314,20 +314,17 @@ def save_portfolio(current_user):
 
 
 @portfolio_bp.route('/current', methods=['GET'])
-def get_current():
+@token_required
+def get_current(current_user):
     """Get user's saved portfolio"""
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
-    
     try:
-        portfolio = Portfolio.query.filter_by(user_id=user_id).order_by(
+        portfolio = Portfolio.query.filter_by(user_id=current_user.id).order_by(
             Portfolio.created_at.desc()
         ).first()
         
         if not portfolio:
             # Return recommended based on profile
-            user_profile = get_user_profile(user_id)
+            user_profile = get_user_profile(current_user.id)
             recommended = get_portfolio_for_surplus(user_profile['monthly_surplus'])
             return jsonify({
                 "has_saved": False,

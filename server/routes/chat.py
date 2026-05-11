@@ -1,33 +1,28 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify
 from services.chat_service import (
     process_chat_message,
     get_chat_history,
     clear_chat_history
 )
+from utils.auth_utils import token_required
 
 chat_bp = Blueprint('chat', __name__, url_prefix='/api/chat')
 
 
 @chat_bp.route('/history', methods=['GET'])
-def get_chat_history_route():
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
-    
+@token_required
+def get_chat_history_route(current_user):
     try:
         limit = request.args.get('limit', 20, type=int)
-        chats = get_chat_history(user_id, limit=limit)
+        chats = get_chat_history(current_user.id, limit=limit)
         return jsonify(chats), 200
     except Exception as e:
         return jsonify({'detail': 'Failed to fetch history'}), 500
 
 
 @chat_bp.route('/query', methods=['POST'])
-def send_query():
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
-    
+@token_required
+def send_query(current_user):
     try:
         data = request.get_json()
         user_query = data.get('query', '').strip()
@@ -35,7 +30,7 @@ def send_query():
         if not user_query:
             return jsonify({'detail': 'Query is required'}), 400
         
-        result = process_chat_message(user_id, user_query)
+        result = process_chat_message(current_user.id, user_query)
         
         return jsonify({
             'query': user_query,
@@ -54,13 +49,10 @@ def send_query():
 
 
 @chat_bp.route('/clear', methods=['POST'])
-def clear_history():
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'detail': 'Not authenticated'}), 401
-    
+@token_required
+def clear_history(current_user):
     try:
-        success = clear_chat_history(user_id)
+        success = clear_chat_history(current_user.id)
         if success:
             return jsonify({'message': 'Chat history cleared'}), 200
         else:
