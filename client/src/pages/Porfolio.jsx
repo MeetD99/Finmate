@@ -33,6 +33,22 @@ const Portfolio = () => {
   const [showGrowthChart, setShowGrowthChart] = useState(false)
   const [assetPrices, setAssetPrices] = useState({})
 
+  // Normalize asset allocations to sum to 100%
+  const normalizeAllocations = (assets) => {
+    if (!assets || assets.length === 0) return assets;
+    
+    const total = assets.reduce((sum, asset) => sum + (asset.allocation || 0), 0);
+    
+    // If total is 0 or already 100, return as-is
+    if (total === 0 || total === 100) return assets;
+    
+    // Normalize allocations to sum to 100
+    return assets.map(asset => ({
+      ...asset,
+      allocation: Math.round((asset.allocation || 0) * 100 / total)
+    }));
+  };
+
   useEffect(() => {
     if (!currentUser) {
       navigate('/login')
@@ -111,61 +127,79 @@ const Portfolio = () => {
     }
   }
 
-   const selectPortfolio = async (portfolio, type) => {
-     if (type === 'sample') {
-       try {
-         const token = localStorage.getItem('token');
-         const res = await fetch(`${API_BASE}/portfolio/sample/${portfolio.slug}`, {
-           headers: {
-             'Authorization': `Bearer ${token}`
-           }
-         })
-         if (res.ok) {
-           const data = await res.json()
-           setSelectedPortfolio({ ...data, type: 'sample' })
-         }
-       } catch (err) {
-         setSelectedPortfolio({ ...portfolio, type: 'sample' })
-       }
-     } else {
-       setSelectedPortfolio({ ...portfolio, type })
-     }
-     setShowGrowthChart(true)
-   }
-
-  const generatePersonalPortfolio = async () => {
-    setIsGenerating(true)
-    showLoading('Generating your portfolio...')
-    
+const selectPortfolio = async (portfolio, type) => {
+  if (type === 'sample') {
     try {
-       const token = localStorage.getItem('token');
-       const res = await fetch(`${API_BASE}/portfolio/personalize`, {
-         method: 'POST',
-         headers: { 
-           'Content-Type': 'application/json',
-           'Authorization': `Bearer ${token}`
-         },
-         body: JSON.stringify({
-           monthly_investment: userSurplus,
-           risk_category: selectedPortfolio?.risk_category || 'Moderate'
-         })
-       })
-      
+      const token = localStorage.getItem('token');
+      const res = await fetch(`${API_BASE}/portfolio/sample/${portfolio.slug}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
       if (res.ok) {
         const data = await res.json()
-        setPersonalPortfolio(data)
-        setSelectedPortfolio({ ...data, type: 'personal' })
-        setActiveTab('personal')
-        showSuccess('Portfolio generated!')
-      } else {
-        showError('Failed to generate portfolio')
+        // Normalize allocations to ensure they sum to 100%
+        if (data.assets) {
+          data.assets = normalizeAllocations(data.assets)
+        }
+        setSelectedPortfolio({ ...data, type: 'sample' })
       }
     } catch (err) {
-      showError('Error generating portfolio')
-    } finally {
-      setIsGenerating(false)
+      const normalizedPortfolio = { ...portfolio, type: 'sample' }
+      // Normalize allocations for fallback data too
+      if (normalizedPortfolio.assets) {
+        normalizedPortfolio.assets = normalizeAllocations(normalizedPortfolio.assets)
+      }
+      setSelectedPortfolio(normalizedPortfolio)
     }
+  } else {
+    const normalizedPortfolio = { ...portfolio, type }
+    // Normalize allocations
+    if (normalizedPortfolio.assets) {
+      normalizedPortfolio.assets = normalizeAllocations(normalizedPortfolio.assets)
+    }
+    setSelectedPortfolio(normalizedPortfolio)
   }
+  setShowGrowthChart(true)
+}
+
+const generatePersonalPortfolio = async () => {
+  setIsGenerating(true)
+  showLoading('Generating your portfolio...')
+  
+  try {
+     const token = localStorage.getItem('token');
+     const res = await fetch(`${API_BASE}/portfolio/personalize`, {
+       method: 'POST',
+       headers: { 
+         'Content-Type': 'application/json',
+         'Authorization': `Bearer ${token}`
+       },
+       body: JSON.stringify({
+         monthly_investment: userSurplus,
+         risk_category: selectedPortfolio?.risk_category || 'Moderate'
+       })
+     })
+   
+   if (res.ok) {
+     const data = await res.json()
+     // Normalize allocations to ensure they sum to 100%
+     if (data.assets) {
+       data.assets = normalizeAllocations(data.assets)
+     }
+     setPersonalPortfolio(data)
+     setSelectedPortfolio({ ...data, type: 'personal' })
+     setActiveTab('personal')
+     showSuccess('Portfolio generated!')
+   } else {
+     showError('Failed to generate portfolio')
+   }
+ } catch (err) {
+   showError('Error generating portfolio')
+ } finally {
+   setIsGenerating(false)
+ }
+}
 
    const applyPortfolio = async () => {
      if (!selectedPortfolio) return
