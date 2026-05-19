@@ -377,7 +377,7 @@ const ExpenseTracker = () => {
             <FaDownload className="absolute right-2 top-1/2 -translate-y-1/2 text-fin-text-variant pointer-events-none w-3 h-3" />
           </div>
           <button
-            onClick={() => handleExportCSV('')}
+            onClick={openAddForm}
             className="px-3 py-1.5 rounded-fin-md transition-colors flex items-center gap-2 text-xs font-medium uppercase tracking-wider bg-fin-primary text-white hover:bg-fin-primary/90"
           >
             <FaPlus />
